@@ -9,7 +9,13 @@
     {
       "id": 1782003345849,
       "name": "Test",
-      "sections": [],
+      "sections": [
+        {
+          "id": 1782003356962,
+          "name": "Test",
+          "scripts": []
+        }
+      ],
       "scripts": []
     }
   ]
