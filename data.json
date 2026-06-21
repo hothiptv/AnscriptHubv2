@@ -1,29 +1,48 @@
 {
     "Info": {
         "Name": "Anscript Hub",
-        "Version": "v2.5",
+        "Version": "v1.0",
         "Creator": "An Bro",
-        "imageId": "rbxassetid://108283706041690",
-        "ThemeColor": [0, 173, 181]
+        "ThemeColor": [
+            0,
+            173,
+            181
+        ]
     },
     "HomeTab": {
-        "Introduction": "Chào mừng anh bạn đã đến với Anscript Hub V2! Đây là nơi tổng hợp các mã tối ưu nhất.",
+        "Introduction": "Chào mừng bạn đã quay trở lại với Anscript Hub!",
         "Elements": [
-            { "type": "label", "text": "Lưu ý: Luôn cập nhật phiên bản mới nhất tại đây." },
-            { "type": "copy_button", "text": "Sao chép Link Discord Support", "link": "https://discord.gg/anscript" }
+            {
+                "type": "label",
+                "text": "Hellu"
+            }
         ]
     },
     "Tabs": [
         {
-            "id": 1710000000000,
-            "Name": "Main Scripts",
-            "Sections": [
+            "Name": "Blox fruit",
+            "Sections": [],
+            "StandaloneScripts": [
                 {
-                    "id": 1710000000001,
-                    "Name": "Farm Vô Hạn",
-                    "Scripts": [
-                        { "id": 1710000000002, "Name": "Auto Farm Level", "Desc": "Tự động đánh quái siêu mượt", "Content": "print('farming')" }
-                    ]
+                    "Name": "Gravity Hub",
+                    "Desc": "No Key, Auto Farm, Auto Candy, Auto V4, Bring Fruits",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua\"))()\n    "
+                },
+                {
+                    "Name": "Redz Hub",
+                    "Desc": "Auto Farm, Auto Level, Teleport, Kill Aura, God Mode",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua\"))()\n    "
+                }
+            ]
+        },
+        {
+            "Name": "Anscript",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Esp v2.5",
+                    "Desc": "ESP NÂNG CAP V2.5",
+                    "Content": "https://raw.githubusercontent.com/hothiptv/AnscriptHub/refs/heads/main/Script/Espv2.5"
                 }
             ]
         }
