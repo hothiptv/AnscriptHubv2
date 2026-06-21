@@ -1,35 +1,50 @@
-const AnscriptHubData = {
-  hubInfo: {
-    name: "Anscript Hub",
-    version: "v2.5",
-    creator: "An Bro",
-    imageId: "rbxassetid://108283706041690",
-    themeColor: [0, 173, 181] // Màu RGB mặc định [R, G, B]
-  },
-  homeTab: {
-    introduction: "Chào mừng anh bạn đã đến với Anscript Hub V2! Đây là nơi tổng hợp các mã tối ưu nhất.",
-    elements: [
-      { type: "label", text: "Lưu ý: Luôn cập nhật phiên bản mới nhất tại đây." },
-      { type: "copy_button", text: "Sao chép Link Discord Support", link: "https://discord.gg/anscript" }
-    ]
-  },
-  tabs: [
-    {
-      id: 1710000000000,
-      name: "Main Scripts",
-      sections: [
+{
+    "Info": {
+        "Name": "Anscript Hub",
+        "Version": "v1.0",
+        "Creator": "Hothiptv",
+        "ThemeColor": [
+            0,
+            173,
+            181
+        ]
+    },
+    "HomeTab": {
+        "Introduction": "Chào mừng bạn đã quay trở lại với Anscript Hub!",
+        "Elements": [
+            {
+                "type": "label",
+                "text": "Hellu"
+            }
+        ]
+    },
+    "Tabs": [
         {
-          id: 1710000000001,
-          name: "Farm Vô Hạn",
-          scripts: [
-            { id: 1710000000002, name: "Auto Farm Level", desc: "Tự động đánh quái siêu mượt", content: "print('farming...')" }
-          ]
+            "Name": "Blox fruit",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Gravity Hub",
+                    "Desc": "No Key, Auto Farm, Auto Candy, Auto V4, Bring Fruits",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/Dev-GravityHub/BloxFruit/refs/heads/main/Main.lua\"))()\n    "
+                },
+                {
+                    "Name": "Redz Hub",
+                    "Desc": "Auto Farm, Auto Level, Teleport, Kill Aura, God Mode",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua\"))()\n    "
+                }
+            ]
+        },
+        {
+            "Name": "Anscript",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Esp v2.5",
+                    "Desc": "ESP NÂNG CAP V2.5",
+                    "Content": "https://raw.githubusercontent.com/hothiptv/AnscriptHub/refs/heads/main/Script/Espv2.5"
+                }
+            ]
         }
-      ],
-      scripts: []
-    }
-  ]
-};
-
-// Xuất dữ liệu phục vụ Node.js
-if (typeof module !== 'undefined') { module.exports = AnscriptHubData; }
+    ]
+}
