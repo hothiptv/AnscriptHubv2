@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(__dirname, 'data.json');
+const DATA_FILE = path.join(__dirname, 'data.js');
 
 // Cấu hình Middleware
 app.use(cors()); // Cho phép tất cả các nguồn (bao gồm cả game Roblox) kết nối tới
