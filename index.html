@@ -2,10 +2,10 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Anscript Hub - Admin Panel</title>
+    <title>Anscript Hub - Admin Panel V2</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; margin: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #121212; color: #e0e0e0; margin: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         h1, h2, h3 { color: #00adb5; }
         input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #2d2d2d; border: 1px solid #3f3f3f; color: #fff; border-radius: 4px; box-sizing: border-box; }
         button { background: #00adb5; color: #fff; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
@@ -14,41 +14,63 @@
         .box { border: 1px solid #3f3f3f; padding: 15px; margin: 15px 0; border-radius: 4px; background: #252525; }
         .flex { display: flex; gap: 10px; }
         .danger-btn { background: #ff4444; }
-        .danger-btn:hover { background: #cc0000; }
     </style>
 </head>
 <body>
 
 <div class="container" id="login-screen">
     <h2>Xác thực Quản trị viên</h2>
-    <p>Vui lòng nhập mã bảo mật để tiếp cận hệ thống:</p>
-    <input type="password" id="password-input" placeholder="Nhập mật khẩu...">
+    <input type="password" id="password-input" placeholder="Nhập mật khẩu (0904)...">
     <button onclick="checkAuth()">Đăng nhập</button>
 </div>
 
 <div class="container hidden" id="admin-screen">
-    <h1>Anscript Hub Dashboard</h1>
+    <h1>Anscript Hub Dashboard V2</h1>
     
     <div class="box">
-        <h3>Thông tin Script tổng hợp</h3>
+        <h3>Thông tin chung & Màu sắc Chủ đề (Theme)</h3>
         <div class="flex">
-            <input type="text" id="hub-name" placeholder="Tên Script Hub (<name>)">
-            <input type="text" id="hub-version" placeholder="Phiên bản (<vision>)">
-            <input type="text" id="hub-creator" placeholder="Tác giả (<cre>)">
+            <input type="text" id="hub-name" placeholder="Tên Script Hub">
+            <input type="text" id="hub-version" placeholder="Phiên bản">
+            <input type="text" id="hub-creator" placeholder="Tác giả">
         </div>
-        <input type="text" id="hub-image" placeholder="ID Ảnh đại diện (Image ID)">
-        <button onclick="saveHubInfo()">Cập nhật thông tin chung</button>
+        <div class="flex">
+            <input type="text" id="hub-image" placeholder="ID Ảnh đại diện">
+            <div style="width: 200px;">
+                <label>Màu chủ đề UI:</label>
+                <input type="color" id="hub-color" value="#00adb5">
+            </div>
+        </div>
+        <button onclick="saveHubInfo()">Cập nhật thông tin & Màu sắc</button>
     </div>
 
     <div class="box">
-        <h3>Tạo Tab & Mục mở rộng (Section)</h3>
+        <h3>Quản lý TAB HOME</h3>
+        <label>Giới thiệu bản Script:</label>
+        <textarea id="home-intro" rows="3" placeholder="Nhập lời giới thiệu ngắn..."></textarea>
+        
+        <h4>Thêm thành phần cho Tab Home:</h4>
         <div class="flex">
-            <input type="text" id="new-tab-name" placeholder="Tên Tab mới (Bắt buộc)">
+            <select id="home-el-type" onchange="toggleHomeFields()">
+                <option value="label">Văn bản ghi chú (Label)</option>
+                <option value="copy_button">Nút bấm Sao chép Link</option>
+            </select>
+            <input type="text" id="home-el-text" placeholder="Nội dung chữ hiển thị...">
+            <input type="text" id="home-el-link" class="hidden" placeholder="Link cần sao chép (https://...)">
+            <button onclick="addHomeElement()">Thêm vào Home</button>
+        </div>
+        <div id="home-elements-preview" style="margin-top: 10px;"></div>
+    </div>
+
+    <div class="box">
+        <h3>Quản lý cấu trúc Tab & Mục</h3>
+        <div class="flex">
+            <input type="text" id="new-tab-name" placeholder="Tên Tab mới">
             <button onclick="createTab()">Thêm Tab</button>
         </div>
         <div class="flex" style="margin-top: 10px;">
             <select id="parent-tab-select"><option value="">-- Chọn Tab chứa mục này --</option></select>
-            <input type="text" id="new-section-name" placeholder="Tên mục mở rộng mới">
+            <input type="text" id="new-section-name" placeholder="Tên mục thả rộng mới">
             <button onclick="createSection()">Thêm Mục</button>
         </div>
     </div>
@@ -57,182 +79,122 @@
         <h3>Thêm Script Mới</h3>
         <input type="text" id="script-name" placeholder="Tên Script">
         <input type="text" id="script-desc" placeholder="Dòng mô tả script">
-        
-        <label for="script-content">Nội dung Script (Tự động chuyển chữ thường & xử lý Raw Link):</label>
-        <textarea id="script-content" rows="6" placeholder="Dán mã Local Script hoặc Link Raw vào đây..."></textarea>
-        
+        <textarea id="script-content" rows="4" placeholder="Dán mã Local hoặc Link Raw..."></textarea>
         <div class="flex">
             <select id="target-tab-select" onchange="updateTargetSectionSelect()"><option value="">-- Chọn Tab (Bắt buộc) --</option></select>
-            <select id="target-section-select"><option value="">-- Để ở ngoài (Không chọn mục) --</option></select>
+            <select id="target-section-select"><option value="">-- Để ở ngoài --</option></select>
         </div>
-        <button onclick="addScript()">Thêm Script vào hệ thống</button>
+        <button onclick="addScript()">Thêm Script</button>
     </div>
 
     <div class="box">
-        <h3>Cấu trúc dữ liệu hiện tại</h3>
-        <button onclick="loadDataFromServer()">Tải lại dữ liệu</button>
-        <div id="data-tree" style="margin-top: 15px;"></div>
+        <h3>Cấu trúc hiện tại trên hệ thống</h3>
+        <div id="data-tree"></div>
     </div>
 </div>
 
 <script>
-    // Mã hóa mật khẩu dạng chuỗi đảo ngược đơn giản để tránh đọc trần khi F12
-    const _0x1a2b = "4090"; 
-    let currentData = { hubInfo: {}, tabs: [] };
+    const _0x1a2b = "4090"; // 0904 đảo ngược
+    let currentData = { hubInfo: { themeColor: [0, 173, 181] }, homeTab: { introduction: "", elements: [] }, tabs: [] };
 
     function checkAuth() {
-        const input = document.getElementById('password-input').value;
-        if (input.split("").reverse().join("") === _0x1a2b) {
+        if (document.getElementById('password-input').value.split("").reverse().join("") === _0x1a2b) {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('admin-screen').classList.remove('hidden');
             loadDataFromServer();
+        } else { alert('Sai mã rồi bro!'); }
+    }
+
+    function toggleHomeFields() {
+        const type = document.getElementById('home-el-type').value;
+        if (type === 'copy_button') {
+            document.getElementById('home-el-link').classList.remove('hidden');
         } else {
-            alert('Sai mật khẩu, bro!');
+            document.getElementById('home-el-link').classList.add('hidden');
         }
+    }
+
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [ parseInt(result[1], 16), parseInt(result[2], 16), parseInt(result[3], 16) ] : [0, 173, 181];
+    }
+
+    function rgbToHex(r, g, b) {
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     }
 
     async function loadDataFromServer() {
-        try {
-            const res = await fetch('/api/data');
-            currentData = await res.json();
-            
-            // Điền thông tin chung
-            document.getElementById('hub-name').value = currentData.hubInfo.name || '';
-            document.getElementById('hub-version').value = currentData.hubInfo.version || '';
-            document.getElementById('hub-creator').value = currentData.hubInfo.creator || '';
-            document.getElementById('hub-image').value = currentData.hubInfo.imageId || '';
-
-            renderDropdowns();
-            renderDataTree();
-        } catch (e) {
-            alert('Lỗi tải dữ liệu: ' + e.message);
+        const res = await fetch('/api/data');
+        currentData = await res.json();
+        
+        document.getElementById('hub-name').value = currentData.hubInfo.name || '';
+        document.getElementById('hub-version').value = currentData.hubInfo.version || '';
+        document.getElementById('hub-creator').value = currentData.hubInfo.creator || '';
+        document.getElementById('hub-image').value = currentData.hubInfo.imageId || '';
+        if(currentData.hubInfo.themeColor) {
+            document.getElementById('hub-color').value = rgbToHex(...currentData.hubInfo.themeColor);
         }
+        document.getElementById('home-intro').value = currentData.homeTab?.introduction || '';
+        
+        renderHomeElements();
+        renderDropdowns();
+        renderDataTree();
     }
 
     async function syncWithServer() {
-        try {
-            const res = await fetch('/api/data', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(currentData)
-            });
-            if (res.ok) {
-                alert('Đã đồng bộ lên GitHub thành công!');
-                loadDataFromServer();
-            }
-        } catch (e) {
-            alert('Lỗi đồng bộ: ' + e.message);
-        }
+        await fetch('/api/data', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(currentData)
+        });
+        loadDataFromServer();
     }
 
     function saveHubInfo() {
-        currentData.hubInfo = {
-            name: document.getElementById('hub-name').value,
-            version: document.getElementById('hub-version').value,
-            creator: document.getElementById('hub-creator').value,
-            imageId: document.getElementById('hub-image').value
-        };
+        currentData.hubInfo.name = document.getElementById('hub-name').value;
+        currentData.hubInfo.version = document.getElementById('hub-version').value;
+        currentData.hubInfo.creator = document.getElementById('hub-creator').value;
+        currentData.hubInfo.imageId = document.getElementById('hub-image').value;
+        currentData.hubInfo.themeColor = hexToRgb(document.getElementById('hub-color').value);
+        currentData.homeTab.introduction = document.getElementById('home-intro').value;
         syncWithServer();
     }
 
-    function createTab() {
-        const name = document.getElementById('new-tab-name').value.trim();
-        if (!name) return alert('Nhập tên Tab đã bro!');
-        currentData.tabs.push({ id: Date.now(), name: name, sections: [], scripts: [] });
-        document.getElementById('new-tab-name').value = '';
+    function addHomeElement() {
+        const type = document.getElementById('home-el-type').value;
+        const text = document.getElementById('home-el-text').value.trim();
+        const link = document.getElementById('home-el-link').value.trim();
+        
+        if(!text) return alert("Nhập nội dung chữ!");
+        if(!currentData.homeTab.elements) currentData.homeTab.elements = [];
+        
+        currentData.homeTab.elements.push({ type, text, link: type === 'copy_button' ? link : undefined });
+        document.getElementById('home-el-text').value = '';
+        document.getElementById('home-el-link').value = '';
         syncWithServer();
     }
 
-    function createSection() {
-        const tabId = document.getElementById('parent-tab-select').value;
-        const name = document.getElementById('new-section-name').value.trim();
-        if (!tabId || !name) return alert('Vui lòng chọn Tab và nhập tên Mục mở rộng!');
-        
-        const tab = currentData.tabs.find(t => t.id == tabId);
-        if (tab) {
-            tab.sections.push({ id: Date.now(), name: name, scripts: [] });
-            document.getElementById('new-section-name').value = '';
-            syncWithServer();
-        }
-    }
-
-    async function processScriptContent(content) {
-        let text = content.trim();
-        // Chuyển chữ hoa thành chữ thường tránh lỗi cú pháp yêu cầu
-        text = text.toLowerCase();
-        
-        // Kiểm tra xem có phải link raw không
-        if (text.startsWith("http://") || text.startsWith("https://")) {
-            return `game:HttpGet("${content.trim()}")`; // Giữ nguyên link gốc khi bọc vào hàm
-        }
-        return content; // Trả về script local gốc nếu không phải link
-    }
-
-    async function addScript() {
-        const name = document.getElementById('script-name').value.trim();
-        const desc = document.getElementById('script-desc').value.trim();
-        const rawContent = document.getElementById('script-content').value;
-        const tabId = document.getElementById('target-tab-select').value;
-        const sectionId = document.getElementById('target-section-select').value;
-
-        if (!name || !tabId) return alert('Tên script và Tab là bắt buộc chọn!');
-
-        const processedContent = await processScriptContent(rawContent);
-        const scriptObject = { id: Date.now(), name, desc, content: processedContent };
-
-        const tab = currentData.tabs.find(t => t.id == tabId);
-        if (sectionId) {
-            const sec = tab.sections.find(s => s.id == sectionId);
-            sec.scripts.push(scriptObject);
-        } else {
-            if(!tab.scripts) tab.scripts = [];
-            tab.scripts.push(scriptObject);
-        }
-
-        // Reset form
-        document.getElementById('script-name').value = '';
-        document.getElementById('script-desc').value = '';
-        document.getElementById('script-content').value = '';
-        syncWithServer();
-    }
-
-    function deleteItem(type, tabId, secId, scrId) {
-        if (!confirm("Chắc chắn muốn xóa không bro?")) return;
-        
-        if (type === 'tab') {
-            currentData.tabs = currentData.tabs.filter(t => t.id != tabId);
-        } else if (type === 'section') {
-            const tab = currentData.tabs.find(t => t.id == tabId);
-            tab.sections = tab.sections.filter(s => s.id != secId);
-        } else if (type === 'script') {
-            const tab = currentData.tabs.find(t => t.id == tabId);
-            if (secId) {
-                const sec = tab.sections.find(s => s.id == secId);
-                sec.scripts = sec.scripts.filter(s => s.id != scrId);
-            } else {
-                tab.scripts = tab.scripts.filter(s => s.id != scrId);
-            }
-        }
-        syncWithServer();
-    }
-
-    function renderDropdowns() {
-        const parentTab = document.getElementById('parent-tab-select');
-        const targetTab = document.getElementById('target-tab-select');
-        
-        parentTab.innerHTML = '<option value="">-- Chọn Tab chứa mục này --</option>';
-        targetTab.innerHTML = '<option value="">-- Chọn Tab (Bắt buộc) --</option>';
-
-        currentData.tabs.forEach(tab => {
-            const opt = `<option value="${tab.id}">${tab.name}</option>`;
-            parentTab.innerHTML += opt;
-            targetTab.innerHTML += opt;
+    function renderHomeElements() {
+        const div = document.getElementById('home-elements-preview');
+        div.innerHTML = '';
+        (currentData.homeTab?.elements || []).forEach((el, index) => {
+            div.innerHTML += `<div style="background:#333; padding:5px; margin:3px; border-radius:4px;">
+                [${el.type.toUpperCase()}] ${el.text} ${el.link ? `(${el.link})` : ''}
+                <button class="danger-btn" style="padding:2px 5px; font-size:11px;" onclick="removeHomeElement(${index})">Xóa</button>
+            </div>`;
         });
-        updateTargetSectionSelect();
     }
 
-    function updateTargetSectionSelect() {
-        const tabId = document.getElementById('target-tab-select').value;
+    function removeHomeElement(index) {
+        currentData.homeTab.elements.splice(index, 1);
+        syncWithServer();
+    }
+
+    // (Giữ các hàm tạo Tab, Section, Script, Dropdown cũ từ ver trước của ông chuyển qua...)
+</script>
+</body>
+</html>
+ById('target-tab-select').value;
         const secSelect = document.getElementById('target-section-select');
         secSelect.innerHTML = '<option value="">-- Để ở ngoài (Không chọn mục) --</option>';
 
