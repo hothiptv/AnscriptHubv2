@@ -1,5 +1,10 @@
 {
-  "hubInfo": {},
+  "hubInfo": {
+    "name": "",
+    "version": "",
+    "creator": "",
+    "imageId": ""
+  },
   "tabs": [
     {
       "id": 1782002334885,
