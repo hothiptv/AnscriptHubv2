@@ -5,5 +5,12 @@
     "creator": "Hothiptv",
     "imageId": ""
   },
-  "tabs": []
+  "tabs": [
+    {
+      "id": 1782003345849,
+      "name": "Test",
+      "sections": [],
+      "scripts": []
+    }
+  ]
 }
