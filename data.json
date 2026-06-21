@@ -32,6 +32,11 @@
                     "Name": "Redz Hub",
                     "Desc": "Auto Farm, Auto Level, Teleport, Kill Aura, God Mode",
                     "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/realredz/BloxFruits/refs/heads/main/Source.lua\"))()\n    "
+                },
+                {
+                    "Name": "FASTHUB",
+                    "Desc": "NO",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/adibhub1/Blox-fruits/refs/heads/main/Bloxfruits\"))()"
                 }
             ]
         },
@@ -43,6 +48,33 @@
                     "Name": "Esp v2.5",
                     "Desc": "ESP NÂNG CAP V2.5",
                     "Content": "https://raw.githubusercontent.com/hothiptv/AnscriptHub/refs/heads/main/Script/Espv2.5"
+                }
+            ]
+        },
+        {
+            "Name": "99 NIGHT",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "FASTHUB",
+                    "Desc": "NO",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/adibhub1/99-nighit-in-forest/refs/heads/main/99%20night%20in%20forest\"))()"
+                },
+                {
+                    "Name": "FASTHUB",
+                    "Desc": "NO",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/adibhub1/Murderers-vs-sherrifs-duels/refs/heads/main/murderers%20vs%20sherrifs%20duels\"))()"
+                }
+            ]
+        },
+        {
+            "Name": "FORSAKEN",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Nolsaken",
+                    "Desc": "Generator Auto Farm",
+                    "Content": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/6191718af12b7fbea18a78b0106bfbf9.lua\"))()"
                 }
             ]
         }
