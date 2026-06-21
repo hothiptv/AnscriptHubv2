@@ -16,7 +16,14 @@
           "scripts": []
         }
       ],
-      "scripts": []
+      "scripts": [
+        {
+          "id": 1782007225835,
+          "name": "Yy",
+          "desc": "Yy",
+          "content": "Yy"
+        }
+      ]
     }
   ]
 }
