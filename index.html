@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Anscript Hub - Admin Panel</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #121212; color: #e0e0e0; margin: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #1e1e1e; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h1, h2, h3 { color: #00adb5; }
+        input, textarea, select { width: 100%; padding: 10px; margin: 8px 0; background: #2d2d2d; border: 1px solid #3f3f3f; color: #fff; border-radius: 4px; box-sizing: border-box; }
+        button { background: #00adb5; color: #fff; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        button:hover { background: #008c9e; }
+        .hidden { display: none !important; }
+        .box { border: 1px solid #3f3f3f; padding: 15px; margin: 15px 0; border-radius: 4px; background: #252525; }
+        .flex { display: flex; gap: 10px; }
+        .danger-btn { background: #ff4444; }
+        .danger-btn:hover { background: #cc0000; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="login-screen">
+    <h2>Xác thực Quản trị viên</h2>
+    <p>Vui lòng nhập mã bảo mật để tiếp cận hệ thống:</p>
+    <input type="password" id="password-input" placeholder="Nhập mật khẩu...">
+    <button onclick="checkAuth()">Đăng nhập</button>
+</div>
+
+<div class="container hidden" id="admin-screen">
+    <h1>Anscript Hub Dashboard</h1>
+    
+    <div class="box">
+        <h3>Thông tin Script tổng hợp</h3>
+        <div class="flex">
+            <input type="text" id="hub-name" placeholder="Tên Script Hub (<name>)">
+            <input type="text" id="hub-version" placeholder="Phiên bản (<vision>)">
+            <input type="text" id="hub-creator" placeholder="Tác giả (<cre>)">
+        </div>
+        <input type="text" id="hub-image" placeholder="ID Ảnh đại diện (Image ID)">
+        <button onclick="saveHubInfo()">Cập nhật thông tin chung</button>
+    </div>
+
+    <div class="box">
+        <h3>Tạo Tab & Mục mở rộng (Section)</h3>
+        <div class="flex">
+            <input type="text" id="new-tab-name" placeholder="Tên Tab mới (Bắt buộc)">
+            <button onclick="createTab()">Thêm Tab</button>
+        </div>
+        <div class="flex" style="margin-top: 10px;">
+            <select id="parent-tab-select"><option value="">-- Chọn Tab chứa mục này --</option></select>
+            <input type="text" id="new-section-name" placeholder="Tên mục mở rộng mới">
+            <button onclick="createSection()">Thêm Mục</button>
+        </div>
+    </div>
+
+    <div class="box">
+        <h3>Thêm Script Mới</h3>
+        <input type="text" id="script-name" placeholder="Tên Script">
+        <input type="text" id="script-desc" placeholder="Dòng mô tả script">
+        
+        <label for="script-content">Nội dung Script (Tự động chuyển chữ thường & xử lý Raw Link):</label>
+        <textarea id="script-content" rows="6" placeholder="Dán mã Local Script hoặc Link Raw vào đây..."></textarea>
+        
+        <div class="flex">
+            <select id="target-tab-select" onchange="updateTargetSectionSelect()"><option value="">-- Chọn Tab (Bắt buộc) --</option></select>
+            <select id="target-section-select"><option value="">-- Để ở ngoài (Không chọn mục) --</option></select>
+        </div>
+        <button onclick="addScript()">Thêm Script vào hệ thống</button>
+    </div>
+
+    <div class="box">
+        <h3>Cấu trúc dữ liệu hiện tại</h3>
+        <button onclick="loadDataFromServer()">Tải lại dữ liệu</button>
+        <div id="data-tree" style="margin-top: 15px;"></div>
+    </div>
+</div>
+
+<script>
+    // Mã hóa mật khẩu dạng chuỗi đảo ngược đơn giản để tránh đọc trần khi F12
+    const _0x1a2b = "4090"; 
+    let currentData = { hubInfo: {}, tabs: [] };
+
+    function checkAuth() {
+        const input = document.getElementById('password-input').value;
+        if (input.split("").reverse().join("") === _0x1a2b) {
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-screen').classList.remove('hidden');
+            loadDataFromServer();
+        } else {
+            alert('Sai mật khẩu, bro!');
+        }
+    }
+
+    async function loadDataFromServer() {
+        try {
+            const res = await fetch('/api/data');
+            currentData = await res.json();
+            
+            // Điền thông tin chung
+            document.getElementById('hub-name').value = currentData.hubInfo.name || '';
+            document.getElementById('hub-version').value = currentData.hubInfo.version || '';
+            document.getElementById('hub-creator').value = currentData.hubInfo.creator || '';
+            document.getElementById('hub-image').value = currentData.hubInfo.imageId || '';
+
+            renderDropdowns();
+            renderDataTree();
+        } catch (e) {
+            alert('Lỗi tải dữ liệu: ' + e.message);
+        }
+    }
+
+    async function syncWithServer() {
+        try {
+            const res = await fetch('/api/data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(currentData)
+            });
+            if (res.ok) {
+                alert('Đã đồng bộ lên GitHub thành công!');
+                loadDataFromServer();
+            }
+        } catch (e) {
+            alert('Lỗi đồng bộ: ' + e.message);
+        }
+    }
+
+    function saveHubInfo() {
+        currentData.hubInfo = {
+            name: document.getElementById('hub-name').value,
+            version: document.getElementById('hub-version').value,
+            creator: document.getElementById('hub-creator').value,
+            imageId: document.getElementById('hub-image').value
+        };
+        syncWithServer();
+    }
+
+    function createTab() {
+        const name = document.getElementById('new-tab-name').value.trim();
+        if (!name) return alert('Nhập tên Tab đã bro!');
+        currentData.tabs.push({ id: Date.now(), name: name, sections: [], scripts: [] });
+        document.getElementById('new-tab-name').value = '';
+        syncWithServer();
+    }
+
+    function createSection() {
+        const tabId = document.getElementById('parent-tab-select').value;
+        const name = document.getElementById('new-section-name').value.trim();
+        if (!tabId || !name) return alert('Vui lòng chọn Tab và nhập tên Mục mở rộng!');
+        
+        const tab = currentData.tabs.find(t => t.id == tabId);
+        if (tab) {
+            tab.sections.push({ id: Date.now(), name: name, scripts: [] });
+            document.getElementById('new-section-name').value = '';
+            syncWithServer();
+        }
+    }
+
+    async function processScriptContent(content) {
+        let text = content.trim();
+        // Chuyển chữ hoa thành chữ thường tránh lỗi cú pháp yêu cầu
+        text = text.toLowerCase();
+        
+        // Kiểm tra xem có phải link raw không
+        if (text.startsWith("http://") || text.startsWith("https://")) {
+            return `game:HttpGet("${content.trim()}")`; // Giữ nguyên link gốc khi bọc vào hàm
+        }
+        return content; // Trả về script local gốc nếu không phải link
+    }
+
+    async function addScript() {
+        const name = document.getElementById('script-name').value.trim();
+        const desc = document.getElementById('script-desc').value.trim();
+        const rawContent = document.getElementById('script-content').value;
+        const tabId = document.getElementById('target-tab-select').value;
+        const sectionId = document.getElementById('target-section-select').value;
+
+        if (!name || !tabId) return alert('Tên script và Tab là bắt buộc chọn!');
+
+        const processedContent = await processScriptContent(rawContent);
+        const scriptObject = { id: Date.now(), name, desc, content: processedContent };
+
+        const tab = currentData.tabs.find(t => t.id == tabId);
+        if (sectionId) {
+            const sec = tab.sections.find(s => s.id == sectionId);
+            sec.scripts.push(scriptObject);
+        } else {
+            if(!tab.scripts) tab.scripts = [];
+            tab.scripts.push(scriptObject);
+        }
+
+        // Reset form
+        document.getElementById('script-name').value = '';
+        document.getElementById('script-desc').value = '';
+        document.getElementById('script-content').value = '';
+        syncWithServer();
+    }
+
+    function deleteItem(type, tabId, secId, scrId) {
+        if (!confirm("Chắc chắn muốn xóa không bro?")) return;
+        
+        if (type === 'tab') {
+            currentData.tabs = currentData.tabs.filter(t => t.id != tabId);
+        } else if (type === 'section') {
+            const tab = currentData.tabs.find(t => t.id == tabId);
+            tab.sections = tab.sections.filter(s => s.id != secId);
+        } else if (type === 'script') {
+            const tab = currentData.tabs.find(t => t.id == tabId);
+            if (secId) {
+                const sec = tab.sections.find(s => s.id == secId);
+                sec.scripts = sec.scripts.filter(s => s.id != scrId);
+            } else {
+                tab.scripts = tab.scripts.filter(s => s.id != scrId);
+            }
+        }
+        syncWithServer();
+    }
+
+    function renderDropdowns() {
+        const parentTab = document.getElementById('parent-tab-select');
+        const targetTab = document.getElementById('target-tab-select');
+        
+        parentTab.innerHTML = '<option value="">-- Chọn Tab chứa mục này --</option>';
+        targetTab.innerHTML = '<option value="">-- Chọn Tab (Bắt buộc) --</option>';
+
+        currentData.tabs.forEach(tab => {
+            const opt = `<option value="${tab.id}">${tab.name}</option>`;
+            parentTab.innerHTML += opt;
+            targetTab.innerHTML += opt;
+        });
+        updateTargetSectionSelect();
+    }
+
+    function updateTargetSectionSelect() {
+        const tabId = document.getElementById('target-tab-select').value;
+        const secSelect = document.getElementById('target-section-select');
+        secSelect.innerHTML = '<option value="">-- Để ở ngoài (Không chọn mục) --</option>';
+
+        if (!tabId) return;
+        const tab = currentData.tabs.find(t => t.id == tabId);
+        if (tab && tab.sections) {
+            tab.sections.forEach(sec => {
+                secSelect.innerHTML += `<option value="${sec.id}">${sec.name}</option>`;
+            });
+        }
+    }
+
+    function renderDataTree() {
+        const tree = document.getElementById('data-tree');
+        tree.innerHTML = '';
+
+        currentData.tabs.forEach(tab => {
+            let tabHtml = `<div class="box" style="border-color: #00adb5;">
+                <strong>📂 Tab: ${tab.name}</strong> 
+                <button class="danger-btn" style="padding:2px 8px; font-size:12px;" onclick="deleteItem('tab', ${tab.id})">Xóa Tab</button>
+                <div style="margin-left: 20px; margin-top: 10px;">`;
+            
+            // Hiển thị các mục mở rộng (Section)
+            tab.sections.forEach(sec => {
+                tabHtml += `<div style="margin-bottom:10px; background:#333; padding:10px; border-radius:4px;">
+                    <strong>🔹 Mục: ${sec.name}</strong>
+                    <button class="danger-btn" style="padding:2px 6px; font-size:11px;" onclick="deleteItem('section', ${tab.id}, ${sec.id})">Xóa Mục</button>
+                    <ul style="margin: 5px 0 0 20px; padding:0;">`;
+                sec.scripts.forEach(scr => {
+                    tabHtml += `<li>📜 ${scr.name} (${scr.desc || 'Không có mô tả'}) 
+                        <button class="danger-btn" style="padding:1px 4px; font-size:10px;" onclick="deleteItem('script', ${tab.id}, ${sec.id}, ${scr.id})">Xóa</button>
+                    </li>`;
+                });
+                tabHtml += `</ul></div>`;
+            });
+
+            // Hiển thị script nằm ngoài mục
+            if (tab.scripts && tab.scripts.length > 0) {
+                tabHtml += `<div style="margin-top:10px;"><strong>📄 Script nằm ngoài mục:</strong><ul>`;
+                tab.scripts.forEach(scr => {
+                    tabHtml += `<li>📜 ${scr.name} 
+                        <button class="danger-btn" style="padding:1px 4px; font-size:10px;" onclick="deleteItem('script', ${tab.id}, null, ${scr.id})">Xóa</button>
+                    </li>`;
+                });
+                tabHtml += `</ul></div>`;
+            }
+
+            tabHtml += `</div></div>`;
+            tree.innerHTML += tabHtml;
+        });
+    }
+</script>
+</body>
+</html>
