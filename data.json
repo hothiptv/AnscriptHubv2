@@ -1,7 +1,7 @@
 {
     "Info": {
         "Name": "Anscript Hub",
-        "Version": "v1.0",
+        "Version": "v1.1",
         "Creator": "Hothiptv",
         "ThemeColor": [
             0,
@@ -75,6 +75,32 @@
                     "Name": "Nolsaken",
                     "Desc": "Generator Auto Farm",
                     "Content": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/6191718af12b7fbea18a78b0106bfbf9.lua\"))()"
+                },
+                {
+                    "Name": "Viprwavre",
+                    "Desc": "No key, Auto block",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/r3take/Forsakan/refs/heads/main/Viperware\"))()"
+                },
+                {
+                    "Name": "Fast Hub",
+                    "Desc": "OP...!",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ivannetta/ShitScripts/refs/heads/main/\"..\"\\102\\111\\114\\115\\97\\107\\101\\110\\46\\108\\117\\97\"))()"
+                }
+            ]
+        },
+        {
+            "Name": "Blade ball",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "NORI",
+                    "Desc": "Auto Parry",
+                    "Content": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/030c18901831a9df3ddf3b8bce0bf9cb.lua\"))()"
+                },
+                {
+                    "Name": "No name",
+                    "Desc": "Auto Parry, Key: DiggaNick2828",
+                    "Content": "loadstring(game:HttpGet(\"https://pastefy.app/mvGbUf1D/raw\"))()"
                 }
             ]
         }
