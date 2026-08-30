@@ -4,31 +4,25 @@ const https = require('https');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ========================================================
-// 🔑 KẾT NỐI ĐẾN 3 BIẾN MÔI TRƯỜNG ÔNG ĐÃ CẤU HÌNH TRÊN RENDER
-const GITHUB_USER = process.env.N_ANS;  // Tên tài khoản GitHub
-const GITHUB_REPO = process.env.R_ANS;  // Tên Kho lưu trữ (Repo)
-const GITHUB_TOKEN = process.env.T_ANS; // GitHub Personal Access Token (PAT)
-const FILE_PATH = "data.json";          // File cần chỉnh sửa trên GitHub
-// ========================================================
+// Biến môi trường kết nối GitHub
+const GITHUB_USER = process.env.N_ANS;
+const GITHUB_REPO = process.env.R_ANS;
+const GITHUB_TOKEN = process.env.T_ANS;
+const FILE_PATH = "data.json";
 
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// Mở khóa CORS thủ công và ngăn chặn Cache
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    
-    // Ép trình duyệt và game không lưu bộ nhớ đệm (Xóa cache dữ liệu cũ)
     res.header("Cache-Control", "no-cache, no-store, must-revalidate");
     res.header("Pragma", "no-cache");
     res.header("Expires", "0");
     next();
 });
 
-// Hàm hỗ trợ gọi GitHub API (Dùng HTTPS thuần của Node.js, không lo lỗi deploy Render)
 function githubRequest(method, path, bodyData) {
     return new Promise((resolve, reject) => {
         const options = {
@@ -59,15 +53,13 @@ function githubRequest(method, path, bodyData) {
     });
 }
 
-// 1. API TRẢ VỀ JSON CHO GAME ROBLOX VÀ ADMIN DASHBOARD TẢI (/raw-hub)
-// Luôn lấy dữ liệu gốc từ GitHub Repo nên dữ liệu đảm bảo đồng bộ thực tế
+// 1. API Lấy dữ liệu Hub
 app.get('/raw-hub', async (req, res) => {
     try {
         if (!GITHUB_USER || !GITHUB_REPO || !GITHUB_TOKEN) {
             return res.status(500).json({ error: "Thiếu cấu hình biến môi trường N_ANS, R_ANS, T_ANS trên Render!" });
         }
 
-        // Tạo chuỗi ngẫu nhiên để GitHub không trả về cache cũ
         const apiPath = `/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}?t=${Date.now()}`;
         const result = await githubRequest('GET', apiPath, null);
 
@@ -75,11 +67,9 @@ app.get('/raw-hub', async (req, res) => {
 
         if (result.statusCode === 200) {
             const fileData = JSON.parse(result.body);
-            // Giải mã chuỗi Base64 từ GitHub thành chuỗi JSON gốc
             const jsonString = Buffer.from(fileData.content, 'base64').toString('utf8');
             return res.status(200).send(jsonString);
         } else {
-            // Nếu không tìm thấy file, trả về cấu trúc rỗng dự phòng tránh lỗi sập script
             const fallbackData = { Info: { Name: "Anscript Hub", Version: "v1.0", ThemeColor: [0, 173, 181] }, HomeTab: { Introduction: "", Elements: [] }, Tabs: [] };
             return res.status(200).json(fallbackData);
         }
@@ -88,7 +78,7 @@ app.get('/raw-hub', async (req, res) => {
     }
 });
 
-// 2. API LƯU DỮ LIỆU TỪ TRANG WEB ADMIN DASHBOARD VÀO FILE data.json TRÊN GITHUB (/save-hub)
+// 2. API Lưu dữ liệu lên GitHub
 app.post('/save-hub', async (req, res) => {
     try {
         if (!GITHUB_USER || !GITHUB_REPO || !GITHUB_TOKEN) {
@@ -97,7 +87,6 @@ app.post('/save-hub', async (req, res) => {
 
         const newData = req.body;
         
-        // Chuẩn hóa và làm sạch dữ liệu đầu vào tránh lỗi "nil index" trong game
         if (newData && newData.Info) {
             if (!newData.Info.ThemeColor || !Array.isArray(newData.Info.ThemeColor)) {
                 newData.Info.ThemeColor = [0, 173, 181];
@@ -108,7 +97,6 @@ app.post('/save-hub', async (req, res) => {
 
         const apiPath = `/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${FILE_PATH}`;
         
-        // Bước A: Gửi yêu cầu GET lấy mã SHA cũ của file trên GitHub (Bắt buộc phải có SHA để ghi đè)
         const getFile = await githubRequest('GET', apiPath, null);
         let sha = null;
         if (getFile.statusCode === 200) {
@@ -116,11 +104,9 @@ app.post('/save-hub', async (req, res) => {
             sha = currentFile.sha;
         }
 
-        // Bước B: Định dạng lại chuỗi JSON đẹp mắt và chuyển sang mã hóa Base64
         const newContentString = JSON.stringify(newData, null, 4);
         const base64Content = Buffer.from(newContentString, 'utf8').toString('base64');
 
-        // Tạo Body đúng cấu trúc GitHub API yêu cầu
         const commitBody = {
             message: "⚡ Auto Update data.json từ Admin Dashboard V3",
             content: base64Content,
@@ -128,7 +114,6 @@ app.post('/save-hub', async (req, res) => {
         };
         if (sha) commitBody.sha = sha;
 
-        // Bước C: Thực hiện đẩy (PUT) dữ liệu trực tiếp lên kho chứa GitHub
         const updateResult = await githubRequest('PUT', apiPath, commitBody);
 
         if (updateResult.statusCode === 200 || updateResult.statusCode === 201) {
@@ -144,7 +129,6 @@ app.post('/save-hub', async (req, res) => {
     }
 });
 
-// Khởi động lắng nghe server
 app.listen(PORT, () => {
     console.log(`🚀 Server AnscriptHub vận hành mượt mà tại cổng: ${PORT}`);
 });
