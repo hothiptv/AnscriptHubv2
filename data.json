@@ -10,7 +10,7 @@
         ]
     },
     "HomeTab": {
-        "Introduction": "Chào mừng bạn đã quay trở lại với Anscript Hub! GEY",
+        "Introduction": "Chào mừng bạn đã quay trở lại với Anscript Hub!",
         "Elements": [
             {
                 "type": "label",
@@ -89,18 +89,13 @@
             ]
         },
         {
-            "Name": "Blade ball",
+            "Name": "Death Ball",
             "Sections": [],
             "StandaloneScripts": [
                 {
                     "Name": "NORI",
-                    "Desc": "Auto Parry",
+                    "Desc": "Auto Farm",
                     "Content": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/030c18901831a9df3ddf3b8bce0bf9cb.lua\"))()"
-                },
-                {
-                    "Name": "No name",
-                    "Desc": "Auto Parry, Key: DiggaNick2828",
-                    "Content": "loadstring(game:HttpGet(\"https://pastefy.app/mvGbUf1D/raw\"))()"
                 }
             ]
         }
