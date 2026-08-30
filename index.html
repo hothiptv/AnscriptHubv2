@@ -12,6 +12,7 @@
             --primary: #00adb5;
             --danger: #ff4444;
             --success: #00c851;
+            --warning: #ffbb33;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -76,6 +77,8 @@
         .btn-primary:hover { background-color: #008c95; }
         .btn-danger { background-color: var(--danger); color: #fff; }
         .btn-danger:hover { background-color: #cc0000; }
+        .btn-warning { background-color: var(--warning); color: #222; }
+        .btn-warning:hover { background-color: #e0a800; }
         .btn-submit {
             width: 100%;
             padding: 15px;
@@ -88,10 +91,20 @@
         /* Cấu trúc cây Script */
         .item-list { margin-top: 10px; padding-left: 15px; border-left: 2px solid var(--primary); }
         .tab-item { background: #252525; padding: 10px; margin: 10px 0; border-radius: 4px; }
-        .section-item { background: #2d2d2d; padding: 8px; margin: 5px 0; border-radius: 4px; }
-        .script-item { background: #353535; padding: 8px; margin: 5px 0; border-radius: 4px; }
+        .script-item { background: #353535; padding: 10px; margin: 8px 0; border-radius: 4px; }
         .item-header { display: flex; justify-content: space-between; align-items: center; }
         .badge { background: #444; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+        .actions { display: flex; gap: 5px; }
+        
+        /* Modal Sửa Script */
+        .modal {
+            display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            background-color: var(--bg-card); margin: 5% auto; padding: 20px;
+            border-radius: 8px; width: 90%; max-width: 600px;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +112,7 @@
 <div class="container">
     <h1>Anscript Hub V2 – Hệ Thống Quản Trị Tối Cao</h1>
 
+    <!-- Cấu hình chung -->
     <div class="card">
         <h2>🏠 Cấu Hình Trang Chủ (Home Tab)</h2>
         <div class="form-row">
@@ -117,84 +131,125 @@
         </div>
     </div>
 
+    <!-- Thêm Thành Phần -->
     <div class="card">
-        <h2>➕ Thêm Thành Phần Vào Tab Script</h2>
-        <div class="form-row">
-            <div class="form-group">
-                <label>Tôi muốn thêm:</label>
-                <select id="add-type" onchange="toggleAddFields()">
-                    <option value="tab">Tạo Tab Mới</option>
-                    <option value="script">Script Tự Do (Standalone)</option>
-                </select>
-            </div>
-            <div class="form-group" id="field-tab-name">
-                <label>Tên Tab Mới</label>
-                <input type="text" id="new-tab-name" placeholder="Nhập tên...">
-            </div>
+        <h2>➕ Thêm Thành Phần Vào Hub</h2>
+        <div class="form-group">
+            <label>Phương thức nhập dữ liệu:</label>
+            <select id="input-mode" onchange="toggleInputMode()">
+                <option value="manual">1. Nhập thủ công (Form)</option>
+                <option value="syntax">2. Nhập nhanh bằng lệnh cú pháp (/s/ và /t/)</option>
+            </select>
         </div>
 
-        <div id="script-fields" style="display: none;">
-            <div class="form-group">
-                <label>Chọn Tab Mục Tiêu</label>
-                <select id="target-tab-select"></select>
-            </div>
+        <!-- Khối Nhập Thủ Công -->
+        <div id="manual-input-block">
             <div class="form-row">
                 <div class="form-group">
-                    <label>Tên Script</label>
-                    <input type="text" id="new-script-name" placeholder="Tên chức năng...">
+                    <label>Loại thành phần:</label>
+                    <select id="add-type" onchange="toggleAddFields()">
+                        <option value="tab">Tạo Tab Mới</option>
+                        <option value="script">Thêm Script Vào Tab</option>
+                    </select>
+                </div>
+                <div class="form-group" id="field-tab-name">
+                    <label>Tên Tab Mới</label>
+                    <input type="text" id="new-tab-name" placeholder="Nhập tên Tab...">
+                </div>
+            </div>
+
+            <div id="script-fields" style="display: none;">
+                <div class="form-group">
+                    <label>Chọn Tab Mục Tiêu (Bắt buộc phải có Tab)</label>
+                    <select id="target-tab-select"></select>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Tên Script</label>
+                        <input type="text" id="new-script-name" placeholder="Ví dụ: Auto Farm Blox Fruit">
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả ngắn</label>
+                        <input type="text" id="new-script-desc" placeholder="Ví dụ: Auto Farm, No Key...">
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label>Mô tả ngắn</label>
-                    <input type="text" id="new-script-desc" placeholder="No Key, Auto Farm...">
+                    <label>Mã nguồn Script (Content Code / Link Raw)</label>
+                    <textarea id="new-script-content" rows="3" placeholder="loadstring(game:HttpGet(...))()"></textarea>
                 </div>
             </div>
-            <div class="form-group">
-                <label>Mã nguồn Script (Content Code/Link Raw)</label>
-                <textarea id="new-script-content" rows="3" placeholder="loadstring(game:HttpGet(...))()"></textarea>
-            </div>
+
+            <button class="btn-primary" onclick="addNewElement()">Tạo Thành Phần</button>
         </div>
 
-        <button class="btn-primary" onclick="addNewElement()">Xác Nhận Thêm Thành Phần</button>
+        <!-- Khối Nhập Nhanh Cú Pháp -->
+        <div id="syntax-input-block" style="display: none;">
+            <div class="form-group">
+                <label>Dán mã cú pháp (Hỗ trợ nhiều dòng cùng lúc):</label>
+                <textarea id="syntax-code" rows="5" placeholder="Cú pháp ví dụ:&#10;/t/Main Tab&#10;/s/Auto Farm/Hỗ trợ cày cấp/loadstring(...)()/Main Tab"></textarea>
+            </div>
+            <p style="font-size: 13px; color: #aaa; margin-top: -5px;">
+                * Cú pháp Tab: <code>/t/Tên Tab</code><br>
+                * Cú pháp Script: <code>/s/Tên script/Mô tả/mã script/Tên tab</code>
+            </p>
+            <button class="btn-primary" onclick="parseSyntaxInput()">Phân Tích Và Nhập</button>
+        </div>
     </div>
 
+    <!-- Quản Lý Danh Sách -->
     <div class="card">
-        <h2>⚙️ Cấu Trúc Script Và Quản Lý (Sửa / Xóa trực tiếp)</h2>
-        <div id="tabs-tree-container">
-            </div>
+        <h2>⚙️ Cấu Trúc Script Và Quản Lý (Sửa / Xóa)</h2>
+        <div id="tabs-tree-container"></div>
     </div>
 
     <button class="btn-submit" onclick="saveDataToServer()">💾 LƯU TOÀN BỘ DỮ LIỆU LÊN SERVER RENDER</button>
 </div>
 
+<!-- Modal Sửa Script -->
+<div id="edit-modal" class="modal">
+    <div class="modal-content">
+        <h2>✏️ Chỉnh Sửa Script</h2>
+        <input type="hidden" id="edit-tab-idx">
+        <input type="hidden" id="edit-script-idx">
+        <div class="form-group">
+            <label>Tên Script</label>
+            <input type="text" id="edit-script-name">
+        </div>
+        <div class="form-group">
+            <label>Mô tả ngắn</label>
+            <input type="text" id="edit-script-desc">
+        </div>
+        <div class="form-group">
+            <label>Nội dung Script</label>
+            <textarea id="edit-script-content" rows="5"></textarea>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button class="btn-primary" onclick="saveEditScript()">Lưu Cập Nhật</button>
+            <button class="btn-danger" onclick="closeEditModal()">Hủy</button>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Biến toàn cục chứa cấu trúc dữ liệu chính thức của Hub
     let hubData = {
         Info: { Name: "", Version: "", Creator: "Hothiptv", ThemeColor: [0, 173, 181] },
         HomeTab: { Introduction: "", Elements: [] },
         Tabs: []
     };
 
-    // 🔄 TỰ ĐỘNG CHẠY KHI TẢI LẠI TRANG (F5)
     window.onload = async function() {
         await loadDataFromServer();
     };
 
-    // Hàm gọi API /raw-hub để tải dữ liệu chuẩn từ GitHub về Web UI
     async function loadDataFromServer() {
-        console.log("🔄 Đang nạp dữ liệu thật từ GitHub...");
         try {
-            // Chèn mã thời gian để trình duyệt không đọc lại cache cũ
             const response = await fetch('/raw-hub?t=' + Date.now());
             if (response.ok) {
                 hubData = await response.json();
-                console.log("✅ Dữ liệu tải về:", hubData);
-                
-                // Đổ dữ liệu thật vào các ô nhập
                 document.getElementById('hub-name').value = hubData.Info?.Name || "";
                 document.getElementById('hub-version').value = hubData.Info?.Version || "";
                 document.getElementById('hub-intro').value = hubData.HomeTab?.Introduction || "";
                 
-                // Vẽ lại cấu trúc danh sách quản lý
                 renderTabsTree();
                 updateTabSelectOptions();
             } else {
@@ -205,22 +260,28 @@
         }
     }
 
-    // Hàm hiển thị ẩn các ô nhập tùy theo loại thành phần muốn thêm
-    function toggleAddFields() {
-        const type = document.getElementById('add-type').value;
-        if (type === 'tab') {
-            document.getElementById('field-tab-name').style.display = 'block';
-            document.getElementById('script-fields').style.display = 'none';
-        } else {
-            document.getElementById('field-tab-name').style.display = 'none';
-            document.getElementById('script-fields').style.display = 'block';
-        }
+    function toggleInputMode() {
+        const mode = document.getElementById('input-mode').value;
+        document.getElementById('manual-input-block').style.display = (mode === 'manual') ? 'block' : 'none';
+        document.getElementById('syntax-input-block').style.display = (mode === 'syntax') ? 'block' : 'none';
     }
 
-    // Hàm cập nhật danh sách chọn Tab khi thêm script tự do
+    function toggleAddFields() {
+        const type = document.getElementById('add-type').value;
+        document.getElementById('field-tab-name').style.display = (type === 'tab') ? 'block' : 'none';
+        document.getElementById('script-fields').style.display = (type === 'script') ? 'block' : 'none';
+    }
+
     function updateTabSelectOptions() {
         const select = document.getElementById('target-tab-select');
         select.innerHTML = "";
+        if (!hubData.Tabs || hubData.Tabs.length === 0) {
+            let opt = document.createElement('option');
+            opt.value = "";
+            opt.innerText = "-- Chưa có Tab nào (Hãy tạo Tab trước) --";
+            select.appendChild(opt);
+            return;
+        }
         hubData.Tabs.forEach((tab, index) => {
             let opt = document.createElement('option');
             opt.value = index;
@@ -229,7 +290,6 @@
         });
     }
 
-    // Thêm Tab mới hoặc Script mới vào cấu trúc cục bộ
     function addNewElement() {
         const type = document.getElementById('add-type').value;
 
@@ -240,11 +300,13 @@
             document.getElementById('new-tab-name').value = "";
         } else {
             const tabIdx = document.getElementById('target-tab-select').value;
+            if (tabIdx === "" || tabIdx === null) return alert("Chưa chọn Tab! Vui lòng tạo Tab trước khi thêm Script.");
+            
             const name = document.getElementById('new-script-name').value.trim();
             const desc = document.getElementById('new-script-desc').value.trim();
             const content = document.getElementById('new-script-content').value.trim();
 
-            if (tabIdx === "" || !name || !content) return alert("Vui lòng điền đầy đủ tên và mã script!");
+            if (!name || !content) return alert("Vui lòng điền đầy đủ tên và mã script!");
 
             if (!hubData.Tabs[tabIdx].StandaloneScripts) hubData.Tabs[tabIdx].StandaloneScripts = [];
             hubData.Tabs[tabIdx].StandaloneScripts.push({ Name: name, Desc: desc, Content: content });
@@ -258,22 +320,101 @@
         updateTabSelectOptions();
     }
 
-    // Hàm xóa Tab khỏi danh sách
+    // Nhập nhanh cú pháp dạng /t/ và /s/
+    function parseSyntaxInput() {
+        const text = document.getElementById('syntax-code').value.trim();
+        if (!text) return alert("Vui lòng nhập lệnh cú pháp!");
+
+        const lines = text.split('\n');
+        let successCount = 0;
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (line.startsWith('/t/')) {
+                const tabName = line.substring(3).trim();
+                if (tabName) {
+                    let exists = hubData.Tabs.find(t => t.Name.toLowerCase() === tabName.toLowerCase());
+                    if (!exists) {
+                        hubData.Tabs.push({ Name: tabName, Sections: [], StandaloneScripts: [] });
+                    }
+                    successCount++;
+                }
+            } else if (line.startsWith('/s/')) {
+                const parts = line.substring(3).split('/');
+                if (parts.length >= 4) {
+                    const scriptName = parts[0].trim();
+                    const scriptDesc = parts[1].trim();
+                    const scriptContent = parts[2].trim();
+                    const tabTargetName = parts[3].trim();
+
+                    let targetTab = hubData.Tabs.find(t => t.Name.toLowerCase() === tabTargetName.toLowerCase());
+                    if (!targetTab) {
+                        // Tự tạo Tab mới nếu chưa có
+                        targetTab = { Name: tabTargetName, Sections: [], StandaloneScripts: [] };
+                        hubData.Tabs.push(targetTab);
+                    }
+
+                    if (!targetTab.StandaloneScripts) targetTab.StandaloneScripts = [];
+                    targetTab.StandaloneScripts.push({
+                        Name: scriptName,
+                        Desc: scriptDesc,
+                        Content: scriptContent
+                    });
+                    successCount++;
+                }
+            }
+        });
+
+        document.getElementById('syntax-code').value = "";
+        renderTabsTree();
+        updateTabSelectOptions();
+        alert(`✅ Đã phân tích và xử lý xong ${successCount} lệnh!`);
+    }
+
     function deleteTab(tabIndex) {
-        if (confirm("Bạn có chắc chắn muốn xóa Tab này không?")) {
+        if (confirm("Bạn có chắc chắn muốn xóa Tab này cùng toàn bộ Script bên trong không?")) {
             hubData.Tabs.splice(tabIndex, 1);
             renderTabsTree();
             updateTabSelectOptions();
         }
     }
 
-    // Hàm xóa Script tự do khỏi Tab
     function deleteScript(tabIndex, scriptIndex) {
-        hubData.Tabs[tabIndex].StandaloneScripts.splice(scriptIndex, 1);
+        if (confirm("Xóa Script này?")) {
+            hubData.Tabs[tabIndex].StandaloneScripts.splice(scriptIndex, 1);
+            renderTabsTree();
+        }
+    }
+
+    function openEditScriptModal(tIdx, sIdx) {
+        const script = hubData.Tabs[tIdx].StandaloneScripts[sIdx];
+        document.getElementById('edit-tab-idx').value = tIdx;
+        document.getElementById('edit-script-idx').value = sIdx;
+        document.getElementById('edit-script-name').value = script.Name || "";
+        document.getElementById('edit-script-desc').value = script.Desc || "";
+        document.getElementById('edit-script-content').value = script.Content || "";
+        document.getElementById('edit-modal').style.display = 'block';
+    }
+
+    function closeEditModal() {
+        document.getElementById('edit-modal').style.display = 'none';
+    }
+
+    function saveEditScript() {
+        const tIdx = document.getElementById('edit-tab-idx').value;
+        const sIdx = document.getElementById('edit-script-idx').value;
+
+        const name = document.getElementById('edit-script-name').value.trim();
+        const desc = document.getElementById('edit-script-desc').value.trim();
+        const content = document.getElementById('edit-script-content').value.trim();
+
+        if (!name || !content) return alert("Không được để trống Tên và Nội dung Script!");
+
+        hubData.Tabs[tIdx].StandaloneScripts[sIdx] = { Name: name, Desc: desc, Content: content };
+        closeEditModal();
         renderTabsTree();
     }
 
-    // Hàm vẽ giao diện quản lý cây cấu trúc cây thư mục Script
     function renderTabsTree() {
         const container = document.getElementById('tabs-tree-container');
         container.innerHTML = "";
@@ -297,32 +438,32 @@
 
             const scriptListContainer = document.getElementById(`scripts-of-tab-${tIdx}`);
             
-            // Vẽ các StandaloneScripts trong Tab
             if (tab.StandaloneScripts && tab.StandaloneScripts.length > 0) {
                 tab.StandaloneScripts.forEach((script, sIdx) => {
                     let scriptDiv = document.createElement('div');
                     scriptDiv.className = 'script-item';
                     scriptDiv.innerHTML = `
                         <div class="item-header">
-                            <div>📜 Script tự do: <strong>${script.Name}</strong> <span class="badge">Ngoài mục</span></div>
-                            <button class="btn-danger" style="padding:2px 6px; font-size:11px;" onclick="deleteScript(${tIdx}, ${sIdx})">Xóa</button>
+                            <div>📜 Script: <strong>${script.Name}</strong></div>
+                            <div class="actions">
+                                <button class="btn-warning" style="padding:3px 8px; font-size:11px;" onclick="openEditScriptModal(${tIdx}, ${sIdx})">Sửa</button>
+                                <button class="btn-danger" style="padding:3px 8px; font-size:11px;" onclick="deleteScript(${tIdx}, ${sIdx})">Xóa</button>
+                            </div>
                         </div>
                         <div style="font-size:12px; color:#aaa; margin-top:4px;">Mô tả: ${script.Desc || "Không có mô tả"}</div>
                     `;
                     scriptListContainer.appendChild(scriptDiv);
                 });
+            } else {
+                scriptListContainer.innerHTML = "<p style='color: #666; font-size: 13px;'>Tab này chưa chứa Script nào.</p>";
             }
         });
     }
 
-    // 🚀 GỬI DỮ LIỆU CẬP NHẬT LÊN SERVER RENDER -> ĐẨY THẲNG LÊN GITHUB
     async function saveDataToServer() {
-        // Cập nhật lại giá trị từ các ô nhập text chính diện vào biến JSON trước khi gửi
         hubData.Info.Name = document.getElementById('hub-name').value.trim();
         hubData.Info.Version = document.getElementById('hub-version').value.trim();
         hubData.HomeTab.Introduction = document.getElementById('hub-intro').value.trim();
-
-        console.log("💾 Đang đẩy dữ liệu chuẩn bị lưu:", hubData);
 
         try {
             const response = await fetch('/save-hub', {
@@ -334,7 +475,7 @@
             const result = await response.json();
             if (response.ok && result.success) {
                 alert("🎉 Đã lưu và đồng bộ trực tiếp lên dữ liệu gốc GitHub thành công!");
-                await loadDataFromServer(); // Nạp lại lần nữa để kiểm tra độ chính xác của file
+                await loadDataFromServer();
             } else {
                 alert("❌ Lỗi lưu file: " + (result.message || "Từ chối kết nối"));
             }
