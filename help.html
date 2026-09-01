@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scriptblox Multi-Link Collector - Trợ Lý Thu Thập Link</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #030712;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --bg-input: rgba(10, 15, 29, 0.95);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-cyan: #00f2fe;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.9) 0%, #030712 100%);
+            background-attachment: fixed;
+            color: var(--text-main);
+            padding: 40px 15px;
+            min-height: 100vh;
+        }
+
+        .collector-card {
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        }
+
+        .form-control-custom, .form-select-custom {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            border-radius: 12px;
+            padding: 12px 16px;
+        }
+        .form-control-custom:focus, .form-select-custom:focus {
+            border-color: var(--primary-cyan);
+            background-color: var(--bg-input);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        .link-item-row {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+        }
+
+        .counter-badge {
+            background: rgba(0, 242, 254, 0.15);
+            color: var(--primary-cyan);
+            border: 1px solid rgba(0, 242, 254, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+<div class="collector-card">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold mb-0 text-info"><i class="fa-solid fa-list-check me-2"></i>Link Collector Pro</h3>
+        <div class="counter-badge" id="link-counter">0 / 10 Link</div>
+    </div>
+
+    <p class="text-muted small mb-4">
+        Hỗ trợ Trọng An gom nhanh tối đa 10 link Scriptblox. Bấm nút <b>"Dán Nhanh từ Clipboard"</b> liên tục để hệ thống tự động xếp hàng loạt link.
+    </p>
+
+    <!-- Cấu hình độ phân tách -->
+    <div class="mb-3">
+        <label class="form-label text-uppercase fw-bold text-muted fs-7">Độ Phân Tách Khi Copy:</label>
+        <select class="form-select form-select-custom" id="export-mode">
+            <option value="newline">Độ 1: Phân tách bằng Xuống dòng (\n)</option>
+            <option value="semicolon">Độ 2: Phân tách bằng Dấu chấm phẩy (;)</option>
+        </select>
+    </div>
+
+    <!-- Nút Dán Nhanh & Thêm Thủ Công -->
+    <div class="d-flex gap-2 mb-4">
+        <button class="btn btn-info fw-bold flex-grow-1 py-3 text-dark" onclick="pasteFromClipboard()">
+            <i class="fa-solid fa-paste me-1"></i> Dán Nhanh Từ Clipboard
+        </button>
+        <button class="btn btn-outline-danger px-3" onclick="clearAllLinks()" title="Xóa tất cả">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>
+    </div>
+
+    <!-- Input dán thủ công dự phòng -->
+    <div class="input-group mb-4">
+        <input type="text5" class="form-control form-control-custom" id="manual-input-link" placeholder="Hoặc dán link vào đây rồi ấn Thêm...">
+        <button class="btn btn-secondary px-4 fw-bold" onclick="addManualLink()">Thêm</button>
+    </div>
+
+    <!-- Danh sách Link đã thu thập -->
+    <div class="mb-4">
+        <label class="form-label text-uppercase fw-bold text-muted fs-7">Danh sách Link đã gom:</label>
+        <div id="collected-links-container" style="max-height: 250px; overflow-y: auto;">
+            <div class="text-center text-muted py-3 font-monospace small">Chưa có link nào được thêm...</div>
+        </div>
+    </div>
+
+    <!-- Nút Copy Hoàn Tất -->
+    <button class="btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase" id="btn-copy-all" onclick="copyAllCollected()" disabled>
+        <i class="fa-solid fa-copy me-2"></i> Đã đủ 10 link - Bấm để Copy Tất Cả
+    </button>
+</div>
+
+<script>
+    let collectedLinks = [];
+
+    function updateUI() {
+        const container = document.getElementById('collected-links-container');
+        const counter = document.getElementById('link-counter');
+        const copyBtn = document.getElementById('btn-copy-all');
+
+        counter.innerText = `${collectedLinks.length} / 10 Link`;
+        container.innerHTML = "";
+
+        if (collectedLinks.length === 0) {
+            container.innerHTML = `<div class='text-center text-muted py-3 font-monospace small'>Chưa có link nào được thêm...</div>`;
+            copyBtn.disabled = true;
+            copyBtn.className = "btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase opacity-50";
+            return;
+        }
+
+        if (collectedLinks.length >= 10) {
+            copyBtn.disabled = false;
+            copyBtn.className = "btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase shadow-lg animate-pulse";
+            copyBtn.innerHTML = `<i class="fa-solid fa-circle-check me-2"></i> Đã đủ 10 link! Bấm để Copy Ngay`;
+        } else {
+            copyBtn.disabled = false;
+            copyBtn.className = "btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase";
+            copyBtn.innerHTML = `<i class="fa-solid fa-copy me-2"></i> Copy ${collectedLinks.length} Link Hiện Tại`;
+        }
+
+        collectedLinks.forEach((link, idx) => {
+            let row = document.createElement('div');
+            row.className = 'link-item-row';
+            row.innerHTML = `
+                <div class="text-truncate" style="max-width: 480px;"><span class="text-info me-2">#${idx + 1}</span>${link}</div>
+                <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="removeLink(${idx})"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            container.appendChild(row);
+        });
+    }
+
+    async function pasteFromClipboard() {
+        if (collectedLinks.length >= 10) {
+            alert("Đã đạt giới hạn tối đa 10 link!");
+            return;
+        }
+        try {
+            const text = await navigator.clipboard.readText();
+            const cleanText = text.trim();
+            if (!cleanText) {
+                alert("Clipboard trống!");
+                return;
+            }
+            // Hỗ trợ nếu người dùng copy cụm nhiều link cùng lúc
+            const urls = cleanText.split(/[\n;]+/).map(u => u.trim()).filter(u => u.length > 0);
+            
+            urls.forEach(u => {
+                if (collectedLinks.length < 10 && !collectedLinks.includes(u)) {
+                    collectedLinks.push(u);
+                }
+            });
+
+            updateUI();
+            if (collectedLinks.length >= 10) {
+                alert("🎉 Đã dán đủ 10 link! Anh có thể copy mang qua Hub chính.");
+            }
+        } catch (err) {
+            alert("Trình duyệt chặn quyền đọc Clipboard. Hãy dán thủ công vào ô bên dưới!");
+        }
+    }
+
+    function addManualLink() {
+        if (collectedLinks.length >= 10) {
+            alert("Đã đạt giới hạn tối đa 10 link!");
+            return;
+        }
+        const input = document.getElementById('manual-input-link');
+        const val = input.value.trim();
+        if (!val) return;
+
+        if (!collectedLinks.includes(val)) {
+            collectedLinks.push(val);
+            input.value = "";
+            updateUI();
+        } else {
+            alert("Link này đã có trong danh sách!");
+        }
+    }
+
+    function removeLink(idx) {
+        collectedLinks.splice(idx, 1);
+        updateUI();
+    }
+
+    function clearAllLinks() {
+        if (confirm("Xóa toàn bộ danh sách link đang có?")) {
+            collectedLinks = [];
+            updateUI();
+        }
+    }
+
+    function copyAllCollected() {
+        if (collectedLinks.length === 0) return;
+
+        const mode = document.getElementById('export-mode').value;
+        const separator = mode === 'newline' ? '\n' : '; ';
+        const resultString = collectedLinks.join(separator);
+
+        navigator.clipboard.writeText(resultString).then(() => {
+            alert(`🎉 Đã copy thành công ${collectedLinks.length} link vào clipboard! Hãy mang sang Hub chính dán vào chế độ 3 nhé.`);
+        }).catch(err => {
+            alert("Lỗi khi copy!");
+        });
+    }
+</script>
+
+</body>
+</html>
