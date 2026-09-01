@@ -1,7 +1,7 @@
 {
     "Info": {
         "Name": "Anscript Hub",
-        "Version": "v1.1",
+        "Version": "v1.2",
         "Creator": "Hothiptv",
         "ThemeColor": [
             0,
@@ -96,6 +96,17 @@
                     "Name": "NORI",
                     "Desc": "Auto Farm",
                     "Content": "loadstring(game:HttpGet(\"https://api.luarmor.net/files/v4/loaders/030c18901831a9df3ddf3b8bce0bf9cb.lua\"))()"
+                }
+            ]
+        },
+        {
+            "Name": "Admin",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Infinite Yield",
+                    "Desc": "Admin, OP",
+                    "Content": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()"
                 }
             ]
         }
