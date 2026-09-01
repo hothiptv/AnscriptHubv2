@@ -118,6 +118,56 @@
                     "Name": "Fishy Hub | Auto Farm Auto TP Auto Distance Fly Speed n More",
                     "Desc": "Auto FarmAuto EscapeFarming timer to make sure the players are killed before teleporting to another oneCounter for auto farmingWalkspeed flyspeedAuto farm distanceN moreThe strongest battlegrounds, the strongest battleground, strongest battlegroundStrongest battle ground, battle, battleground, strongest, tsb, free tsb scripts, best tsb scripts, free the strongest battleground scripts, best the strongest battleground scripts",
                     "Content": "loadstring(game:HttpGet(\"https://api.jnkie.com/api/v1/luascripts/public/0bf194f0ad8dcc0f8da16a98201f6fc1f96396245031350523e90a541d5186bb/download\"))()"
+                },
+                {
+                    "Name": "I The Strongest Battleground I Auto Kill Player and more",
+                    "Desc": "just a simple script that autofarms kills and goood for killing players in the strongest battlegrounds",
+                    "Content": "loadstring(game:HttpGet(\"https://pastebin.com/raw/V0uEDSGE\"))()"
+                },
+                {
+                    "Name": "OP Moveset Copier Working Perfectly",
+                    "Desc": "This script is to copy people's PS+ Moveset From Moveset Builder and you can copy every person moveset and every single moveset and you can copy it even thought the player is not inside a private server and this script was perfect for those who cannot create a moveset and would rather copy other people hardwork instead of work for it.Remember this script if for Roblox gamethe strongest battlegroundTSBtsbTHE STRONGEST BATTLEGROUNDThe Strongest Battleground",
+                    "Content": "loadstring(game:HttpGet(\"https://r4-sec.vercel.app/files/0cde7aa0a6259463fb24d83821f6482a\"))()"
+                },
+                {
+                    "Name": "OP Lock Roblox Script The Strongest Battleground Undetected",
+                    "Desc": "This script has some features such asPing SpooferAimlockCamlockCharacter LockLock KeybindESPping ESPHealth ESPHitbox ESPAnd customization for button UI for the mobile playersChange lock on textChange lock off textUI cornerSizePredictionAuto Tech Best Lock NoclipThe Strongest Battleground And more!!",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ArchIsDead/Arch-Vault/refs/heads/main/&R4-Lock.lua\"))()"
+                },
+                {
+                    "Name": "BaeMinh Hub",
+                    "Desc": "- Auto Kill- Anti DC- Auto Block- Moveset Saitama and Garou- So many tech- Fling Player- FPS Boots- Chat Hub- Trash-can man- AIM Player(Camlock + Silent)- So many skin (visual)- Anti Fling- Fly- Noclip- Anti-void- Emote Limeted- Emote Free- Effects M1s-...",
+                    "Content": "loadstring(game:HttpGet(\"https://gist.githubusercontent.com/ngm2807-sudo/3bb38870095ccba814f13993813410f3/raw/BaeMinhHub.lua\"))()"
+                },
+                {
+                    "Name": "sitama to sukuna",
+                    "Desc": "sitama to sukuna | tsb scriptoriginal | newNormal Punch | Black Flash.consecutive punches | Diveragent Barrage.shove | Manji Kick.Uppercut | Upperkick.ultimate nameSerious Mode | KING OF CURSESultimate original : newDeath Counter : Counter Protect Soul.Table Flip : World Cutting Slash.Serious Punch : Open.Omni Directional Punch : Domain Expansion.notesl: \"every move got animation even the ultimate (FE).ultimate moves got message (need to verfiy your age).There's a sound(not FE).ultimate message (join the game and test the sounds).\"Counter Protect Soul | message:(know your place fool)World Cutting Slash (there's no sound) | message: (1st message :World Cutting Slash)(2nd message:RECOIL) (3th message:TWIN METEORS) (4th message: WORLD CUTTING SLASH) Open. | message:(Fūga.)Domain Expansion | message:(1st message:Domain Expansion) (2nd message:Malevolent Shrine)Joint and hear all the sounda by yourself :))the script in the first version if you found any issues DM me in discord my user: 1_scriptkeyless forever :)Current version: 1(remake and fix glitches: https://scriptblox.com/script/The-Strongest-Battlegrounds-Saitama-to-Sukuna-21678)! If there's any glitchs DM me 6_wp",
+                    "Content": "loadstring(game:HttpGet('https://pastebin.com/raw/Ag6A1C04'))()"
+                },
+                {
+                    "Name": "THE STRONGEST BATTLE GROUND FREE SCRIPT",
+                    "Desc": "FREE, LEAKED BATTLEGROUND SCRIPT",
+                    "Content": "loadstring(game:HttpGet(\"https://api.getpolsec.com/scripts/hosted/7bad5e3679f40a89db9300800355a40cd92b70f3ca4c354ffe0e52444c6341fb.lua\"))()"
+                },
+                {
+                    "Name": "Kyoto",
+                    "Desc": "Auto Kyoto Script For The Strongest Battleground - Open Source Code",
+                    "Content": "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/rumbleinfinity/Script/refs/heads/main/KyotoTSB.lua\"))()"
+                },
+                {
+                    "Name": "LordHaveFun Sound In His Video",
+                    "Desc": "Just watch LordHeaven's short video to know what feature is it",
+                    "Content": "loadstring(game:HttpGet(\"https://pastefy.app/0PjktoRk/raw\"))()"
+                },
+                {
+                    "Name": "Silent Aim Hub",
+                    "Desc": "Games Supported:- All Battleground Game (Recommend The Strongest Battleground)Features:- Target:+ Choose Target (No Dummy)+ Aimbot+ Aimbot Keybind- Predict:+ Predict Strength (  0 - 3 Studs )+ Predict+ Predict Trail- Aim Method:+ Localplayer (Not camera so dont use at shooting game)+ Target HumanoidRootPart (Torso)                      📜Credits📜Thank @White_Hat and more.. for the create folder and folder check script.                    ❗READ❗Please dont put it in loadstring, maybe bug.Also, im not sure is it undetected so use at your own risk.",
+                    "Content": "local StarterGui = game:GetService(\"StarterGui\")\n\npcall(function()\n    StarterGui:SetCore(\"SendNotification\", {\n        Title = \"From Unlikely_Human\",\n        Text = \"Hey, if you see this, please copy then paste in your executor, dont put it in loadstring\",\n        Duration = math.huge,\n        Button1 = \"I Understand\"\n    })\nend)\n--Please dont put it in loadstring, maybe bug--\n--Thank @White_Hat and more.. for the create folder and folder check script--\nlocal a=\"https://ucd55e9de509925b56bc144cb539.dl.dropboxusercontent.com/cd/0/inline/C9hA6-4pM0Lj6RxfxdL5qtmtWBP2A-cS13-mT9USalBuatNw41BFMr-Yx4PUYfOGbeYOi3BTy58e008yvtUjrO-NyG4mxbTWsxlcMWQeGlBmP4pqu0QO3iMx9DKdOjV0ooUlXYGLOl5oY_CMMj9ftj5d/file#\"if makefolder or writefile then if not isfolder(\"Unlikely_Human\")then makefolder(\"Unlikely_Human\")end;if not isfolder(\"Unlikely_Human/Asset\")then makefolder(\"Unlikely_Human/Asset\")end;writefile(\"Unlikely_Human/Asset/Obfuscated.lua\",game:HttpGet(a))loadfile(\"Unlikely_Human/Asset/Obfuscated.lua\")()else loadstring(game:HttpGet(a))()end"
+                },
+                {
+                    "Name": "Best Kill Farm Undetected OP",
+                    "Desc": "This script is for The Strongest Battleground, This Script is to Auto Farm Kill In Public Because This Is Not Alt Farm, This Script Is Perfect For Those Who Wants To Get To The TOP In The Leaderboard Easily and This Has Auto Skill, Auto Punch, Invisibility, BTW Don't Set The Y Setting to under than 0 because 0 is already set into perfection",
+                    "Content": "loadstring(game:HttpGet(\"https://r4-sec.vercel.app/files/3291ea8a61e376d63543094ce7ce2c55\"))()"
                 }
             ]
         }
