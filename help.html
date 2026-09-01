@@ -92,7 +92,7 @@
     </div>
 
     <p class="text-muted small mb-4">
-        Hỗ trợ Trọng An gom nhanh tối đa 10 link Scriptblox. Bấm nút <b>"Dán Nhanh từ Clipboard"</b> liên tục để hệ thống tự động xếp hàng loạt link.
+        Thu thập tối đa 10 link Scriptblox. Bấm nút <b>"Dán Nhanh từ Clipboard"</b> liên tục để hệ thống tự động bóc tách và xuống dòng từng link.
     </p>
 
     <!-- Cấu hình độ phân tách -->
@@ -104,7 +104,7 @@
         </select>
     </div>
 
-    <!-- Nút Dán Nhanh & Thêm Thủ Công -->
+    <!-- Nút Dán Nhanh & Xóa Tất Cả -->
     <div class="d-flex gap-2 mb-4">
         <button class="btn btn-info fw-bold flex-grow-1 py-3 text-dark" onclick="pasteFromClipboard()">
             <i class="fa-solid fa-paste me-1"></i> Dán Nhanh Từ Clipboard
@@ -116,7 +116,7 @@
 
     <!-- Input dán thủ công dự phòng -->
     <div class="input-group mb-4">
-        <input type="text5" class="form-control form-control-custom" id="manual-input-link" placeholder="Hoặc dán link vào đây rồi ấn Thêm...">
+        <input type="text" class="form-control form-control-custom" id="manual-input-link" placeholder="Hoặc dán link vào đây rồi ấn Thêm...">
         <button class="btn btn-secondary px-4 fw-bold" onclick="addManualLink()">Thêm</button>
     </div>
 
@@ -130,7 +130,7 @@
 
     <!-- Nút Copy Hoàn Tất -->
     <button class="btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase" id="btn-copy-all" onclick="copyAllCollected()" disabled>
-        <i class="fa-solid fa-copy me-2"></i> Đã đủ 10 link - Bấm để Copy Tất Cả
+        <i class="fa-solid fa-copy me-2"></i> Chưa đủ link - Hãy dán thêm
     </button>
 </div>
 
@@ -154,7 +154,7 @@
 
         if (collectedLinks.length >= 10) {
             copyBtn.disabled = false;
-            copyBtn.className = "btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase shadow-lg animate-pulse";
+            copyBtn.className = "btn btn-success w-100 py-3 fw-bold fs-6 text-uppercase shadow-lg";
             copyBtn.innerHTML = `<i class="fa-solid fa-circle-check me-2"></i> Đã đủ 10 link! Bấm để Copy Ngay`;
         } else {
             copyBtn.disabled = false;
@@ -185,8 +185,8 @@
                 alert("Clipboard trống!");
                 return;
             }
-            // Hỗ trợ nếu người dùng copy cụm nhiều link cùng lúc
-            const urls = cleanText.split(/[\n;]+/).map(u => u.trim()).filter(u => u.length > 0);
+            // Tách các link nếu lỡ dán nhiều dòng cùng lúc, lọc bỏ khoảng trắng thừa
+            const urls = cleanText.split(/\r?\n|;/).map(u => u.trim()).filter(u => u.length > 0);
             
             urls.forEach(u => {
                 if (collectedLinks.length < 10 && !collectedLinks.includes(u)) {
@@ -196,7 +196,7 @@
 
             updateUI();
             if (collectedLinks.length >= 10) {
-                alert("🎉 Đã dán đủ 10 link! Anh có thể copy mang qua Hub chính.");
+                alert("🎉 Đã đủ 10 link! Bạn có thể bấm nút Copy Tất Cả.");
             }
         } catch (err) {
             alert("Trình duyệt chặn quyền đọc Clipboard. Hãy dán thủ công vào ô bên dưới!");
@@ -237,11 +237,12 @@
         if (collectedLinks.length === 0) return;
 
         const mode = document.getElementById('export-mode').value;
-        const separator = mode === 'newline' ? '\n' : '; ';
+        // Đảm bảo ép đúng ký tự xuống dòng chuẩn thực tế \n
+        const separator = mode === 'newline' ? '\r\n' : '; ';
         const resultString = collectedLinks.join(separator);
 
         navigator.clipboard.writeText(resultString).then(() => {
-            alert(`🎉 Đã copy thành công ${collectedLinks.length} link vào clipboard! Hãy mang sang Hub chính dán vào chế độ 3 nhé.`);
+            alert(`🎉 Đã copy thành công ${collectedLinks.length} link vào clipboard theo đúng định dạng xuống dòng! Hãy mang sang Hub chính dán vào chế độ 3 nhé.`);
         }).catch(err => {
             alert("Lỗi khi copy!");
         });
