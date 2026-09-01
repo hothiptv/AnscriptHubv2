@@ -109,6 +109,17 @@
                     "Content": "loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()"
                 }
             ]
+        },
+        {
+            "Name": "The Strongest Battleground",
+            "Sections": [],
+            "StandaloneScripts": [
+                {
+                    "Name": "Fishy Hub | Auto Farm Auto TP Auto Distance Fly Speed n More",
+                    "Desc": "Auto FarmAuto EscapeFarming timer to make sure the players are killed before teleporting to another oneCounter for auto farmingWalkspeed flyspeedAuto farm distanceN moreThe strongest battlegrounds, the strongest battleground, strongest battlegroundStrongest battle ground, battle, battleground, strongest, tsb, free tsb scripts, best tsb scripts, free the strongest battleground scripts, best the strongest battleground scripts",
+                    "Content": "loadstring(game:HttpGet(\"https://api.jnkie.com/api/v1/luascripts/public/0bf194f0ad8dcc0f8da16a98201f6fc1f96396245031350523e90a541d5186bb/download\"))()"
+                }
+            ]
         }
     ]
 }
