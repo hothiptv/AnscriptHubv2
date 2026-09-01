@@ -562,6 +562,17 @@
             font-weight: 700;
         }
 
+        /* Scriptblox Section Preview Card */
+        .scriptblox-preview-box {
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--primary-cyan);
+            border-radius: 16px;
+            padding: 22px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+            animation: fadeInDown 0.3s ease-out;
+        }
+
         /* Modal Backdrop */
         .modal-custom-backdrop {
             display: none; 
@@ -759,10 +770,11 @@
                 <select class="form-select-custom" id="input-mode" onchange="toggleInputMode()">
                     <option value="manual">1. Nhập thủ công (Form)</option>
                     <option value="syntax">2. Nhập nhanh bằng lệnh cú pháp (/s/ và /t/)</option>
+                    <option value="scriptblox">3. Lấy dữ liệu tự động từ Scriptblox (API Proxy Bypass)</option>
                 </select>
             </div>
 
-            <!-- Form Nhập Thủ Công -->
+            <!-- Form 1: Nhập Thủ Công -->
             <div id="manual-input-block">
                 <div class="row g-3">
                     <div class="col-md-6 mb-3">
@@ -804,7 +816,7 @@
                 </button>
             </div>
 
-            <!-- Form Cú Pháp Nhập Nhanh -->
+            <!-- Form 2: Cú Pháp Nhập Nhanh -->
             <div id="syntax-input-block" style="display: none;">
                 <div class="mb-3">
                     <label class="form-label-custom">Dán mã cú pháp (Nhiều dòng cùng lúc):</label>
@@ -817,6 +829,45 @@
                 <button class="btn-custom btn-primary-cyan" onclick="parseSyntaxInput()">
                     <i class="fa-solid fa-bolt-lightning"></i> Phân Tích Và Nhập
                 </button>
+            </div>
+
+            <!-- Form 3: Scriptblox Auto API Fetcher (Proxy Bypass 6 lần) -->
+            <div id="scriptblox-input-block" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label-custom"><i class="fa-solid fa-link me-1 text-info"></i> Dán Link hoặc ID Scriptblox:</label>
+                    <input type="text" class="form-control-custom" id="scriptblox-url" placeholder="Ví dụ: https://scriptblox.com/script/Blox-Fruits-Auto-Farm-12345 hoặc 65f123456789">
+                </div>
+                <button class="btn-custom btn-primary-cyan mb-3" onclick="fetchFromScriptblox()">
+                    <i class="fa-solid fa-cloud-arrow-down"></i> Lấy Dữ Liệu Scriptblox
+                </button>
+
+                <div id="sb-status-box" style="display:none;" class="alert alert-info py-2 px-3 mb-3 font-monospace fs-6"></div>
+
+                <!-- Khung Xem Trước Sau Khi Lấy Dữ Liệu -->
+                <div id="scriptblox-preview-card" class="scriptblox-preview-box" style="display: none;">
+                    <h4 class="fs-6 fw-bold text-info mb-3"><i class="fa-solid fa-eye me-1"></i> XEM TRƯỚC DỮ LIỆU TỪ SCRIPTBLOX</h4>
+                    <div class="mb-3">
+                        <label class="form-label-custom">Chọn Tab Mục Tiêu Trút Dữ Liệu Vào:</label>
+                        <select class="form-select-custom" id="sb-target-tab-select"></select>
+                    </div>
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Tên Script</label>
+                            <input type="text" class="form-control-custom" id="sb-fetched-name">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label-custom">Mô tả Script</label>
+                            <input type="text" class="form-control-custom" id="sb-fetched-desc">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label-custom">Mã Nguồn Script (Code)</label>
+                        <textarea class="form-control-custom" id="sb-fetched-content" rows="4"></textarea>
+                    </div>
+                    <button class="btn-custom btn-success-custom w-100 py-2 fs-6 fw-bold" onclick="confirmAddScriptblox()">
+                        <i class="fa-solid fa-circle-check me-1"></i> XÁC NHẬN THÊM SCRIPT NÀY VÀO TAB
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -865,7 +916,7 @@
     </div>
 </div>
 
-<!-- Modal Sửa Script (Hoặc chuyển sang chỉnh sửa khi nhấp Script) -->
+<!-- Modal Sửa Script -->
 <div id="edit-modal" class="modal-custom-backdrop">
     <div class="modal-dialog-custom">
         <h2 class="card-title-custom mb-4"><i class="fa-solid fa-pen-to-square text-info"></i> Chỉnh Sửa Script</h2>
@@ -1023,6 +1074,7 @@
         const mode = document.getElementById('input-mode').value;
         document.getElementById('manual-input-block').style.display = (mode === 'manual') ? 'block' : 'none';
         document.getElementById('syntax-input-block').style.display = (mode === 'syntax') ? 'block' : 'none';
+        document.getElementById('scriptblox-input-block').style.display = (mode === 'scriptblox') ? 'block' : 'none';
     }
 
     function toggleAddFields() {
@@ -1032,20 +1084,33 @@
     }
 
     function updateTabSelectOptions() {
-        const select = document.getElementById('target-tab-select');
-        select.innerHTML = "";
+        const selectManual = document.getElementById('target-tab-select');
+        const selectScriptblox = document.getElementById('sb-target-tab-select');
+        
+        selectManual.innerHTML = "";
+        selectScriptblox.innerHTML = "";
+
         if (!hubData.Tabs || hubData.Tabs.length === 0) {
-            let opt = document.createElement('option');
-            opt.value = "";
-            opt.innerText = "-- Chưa có Tab nào (Hãy tạo Tab trước) --";
-            select.appendChild(opt);
+            let opt1 = document.createElement('option');
+            opt1.value = ""; opt1.innerText = "-- Chưa có Tab nào (Hãy tạo Tab trước) --";
+            selectManual.appendChild(opt1);
+
+            let opt2 = document.createElement('option');
+            opt2.value = ""; opt2.innerText = "-- Chưa có Tab nào (Hãy tạo Tab trước) --";
+            selectScriptblox.appendChild(opt2);
             return;
         }
+
         hubData.Tabs.forEach((tab, index) => {
-            let opt = document.createElement('option');
-            opt.value = index;
-            opt.innerText = tab.Name;
-            select.appendChild(opt);
+            let opt1 = document.createElement('option');
+            opt1.value = index;
+            opt1.innerText = tab.Name;
+            selectManual.appendChild(opt1);
+
+            let opt2 = document.createElement('option');
+            opt2.value = index;
+            opt2.innerText = tab.Name;
+            selectScriptblox.appendChild(opt2);
         });
     }
 
@@ -1132,6 +1197,104 @@
         renderTabsTree();
         updateTabSelectOptions();
         showToast(`Đã phân tích thành công ${successCount} mục!`, "success");
+        switchTab('dashboard');
+    }
+
+    // PROXY BYPASS & SCRIPTBLOX FETCH LOGIC (THỬ 6 LẦN PROXY)
+    async function fetchFromScriptblox() {
+        const rawInput = document.getElementById('scriptblox-url').value.trim();
+        if (!rawInput) return showToast("Vui lòng dán Link hoặc ID Scriptblox!", "error");
+
+        // Parse Script ID / Slug
+        let scriptId = rawInput;
+        if (rawInput.includes('scriptblox.com/script/')) {
+            const parts = rawInput.split('scriptblox.com/script/')[1].split('?')[0].split('/');
+            scriptId = parts[0];
+        }
+
+        const targetApiUrl = `https://scriptblox.com/api/script/${scriptId}`;
+        const statusBox = document.getElementById('sb-status-box');
+        statusBox.style.display = "block";
+
+        const proxies = [
+            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+            url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+            url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+            url => `https://thingproxy.freeboard.io/fetch/${url}`,
+            url => `https://jsonp.afeld.me/?url=${encodeURIComponent(url)}`,
+            url => url // Direct Fallback
+        ];
+
+        let fetchedData = null;
+
+        for (let i = 0; i < proxies.length; i++) {
+            statusBox.innerText = `⏳ [Lần thử ${i + 1}/6 Proxy] Đang vượt tường lửa & lấy dữ liệu Scriptblox...`;
+            try {
+                const proxyUrl = proxies[i](targetApiUrl);
+                const response = await fetch(proxyUrl, { headers: { 'Accept': 'application/json' } });
+                
+                if (response.ok) {
+                    const responseText = await response.text();
+                    let parsedJson = null;
+                    try {
+                        parsedJson = JSON.parse(responseText);
+                    } catch(e) {
+                        try {
+                            const wrapped = JSON.parse(responseText);
+                            if (wrapped.contents) parsedJson = JSON.parse(wrapped.contents);
+                        } catch(err2) {}
+                    }
+
+                    if (parsedJson && (parsedJson.script || parsedJson.title)) {
+                        fetchedData = parsedJson.script || parsedJson;
+                        statusBox.innerText = `✅ Lấy dữ liệu thành công qua Proxy ${i + 1}!`;
+                        break;
+                    }
+                }
+            } catch (err) {
+                console.warn(`Proxy ${i + 1} thất bại:`, err);
+            }
+        }
+
+        if (!fetchedData) {
+            statusBox.className = "alert alert-danger py-2 px-3 mb-3 font-monospace fs-6";
+            statusBox.innerText = "❌ Không thể vượt kiểm tra Bot/Cloudflare sau 6 lần thử Proxy. Vui lòng kiểm tra lại Link/ID!";
+            showToast("Lấy dữ liệu Scriptblox thất bại!", "error");
+            return;
+        }
+
+        statusBox.className = "alert alert-success py-2 px-3 mb-3 font-monospace fs-6";
+
+        // Display Fetched Data in Preview Box
+        document.getElementById('sb-fetched-name').value = fetchedData.title || "Scriptblox Script";
+        document.getElementById('sb-fetched-desc').value = fetchedData.features || (fetchedData.game?.name ? `Game: ${fetchedData.game.name}` : "Được bóc tách từ Scriptblox");
+        document.getElementById('sb-fetched-content').value = fetchedData.script || fetchedData.rawScript || "";
+
+        document.getElementById('scriptblox-preview-card').style.display = "block";
+        showToast("Đã trích xuất dữ liệu thành công!", "success");
+    }
+
+    function confirmAddScriptblox() {
+        const tabIdx = document.getElementById('sb-target-tab-select').value;
+        if (tabIdx === "" || tabIdx === null) return showToast("Vui lòng chọn Tab mục tiêu trước!", "error");
+
+        const name = document.getElementById('sb-fetched-name').value.trim();
+        const desc = document.getElementById('sb-fetched-desc').value.trim();
+        const content = document.getElementById('sb-fetched-content').value.trim();
+
+        if (!name || !content) return showToast("Tên và Mã script không được trống!", "error");
+
+        if (!hubData.Tabs[tabIdx].StandaloneScripts) hubData.Tabs[tabIdx].StandaloneScripts = [];
+        hubData.Tabs[tabIdx].StandaloneScripts.push({ Name: name, Desc: desc, Content: content });
+
+        // Reset inputs & preview
+        document.getElementById('scriptblox-url').value = "";
+        document.getElementById('scriptblox-preview-card').style.display = "none";
+        document.getElementById('sb-status-box').style.display = "none";
+
+        updateStats();
+        renderTabsTree();
+        showToast(`Đã thêm Script "${name}" vào Tab!`, "success");
         switchTab('dashboard');
     }
 
