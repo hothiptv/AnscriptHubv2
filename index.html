@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anscript Hub V2 - Hệ Thống Quản Trị Tối Cao</title>
+    <title>Anscript Hub V2 - Hệ Thống Quản Trị Super VIP</title>
 
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -19,7 +19,7 @@
             --bg-dark: #030712;
             --bg-card: rgba(15, 23, 42, 0.75);
             --bg-card-hover: rgba(30, 41, 59, 0.85);
-            --bg-input: rgba(10, 15, 29, 0.9);
+            --bg-input: rgba(8, 12, 24, 0.95);
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --primary-cyan: #00f2fe;
@@ -28,10 +28,9 @@
             --accent-gold: #fbbf24;
             --accent-purple: #c084fc;
             --danger: #ef4444;
-            --danger-hover: #dc2626;
             --success: #10b981;
             --warning: #f59e0b;
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.12);
             --glass-blur: blur(20px);
         }
 
@@ -39,13 +38,14 @@
             font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
             background-color: var(--bg-dark);
             background-image: 
-                radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 90% 85%, rgba(192, 132, 252, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.9) 0%, #030712 100%);
+                radial-gradient(circle at 10% 15%, rgba(0, 242, 254, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 85%, rgba(192, 132, 252, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.92) 0%, #030712 100%);
             background-attachment: fixed;
             color: var(--text-main);
             padding-bottom: 60px;
             min-height: 100vh;
+            user-select: none;
         }
 
         @keyframes fadeInDown {
@@ -54,24 +54,23 @@
         }
 
         @keyframes pulseNeon {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 242, 254, 0.25), inset 0 0 15px rgba(0, 242, 254, 0.15); }
-            50% { box-shadow: 0 0 40px rgba(0, 242, 254, 0.5), inset 0 0 25px rgba(0, 242, 254, 0.25); }
+            0%, 100% { box-shadow: 0 0 25px rgba(0, 242, 254, 0.25), inset 0 0 15px rgba(0, 242, 254, 0.15); }
+            50% { box-shadow: 0 0 45px rgba(0, 242, 254, 0.55), inset 0 0 25px rgba(0, 242, 254, 0.3); }
         }
 
-        @keyframes statusPing {
-            0% { transform: scale(0.95); opacity: 0.8; }
-            50% { transform: scale(1.6); opacity: 0; }
-            100% { transform: scale(0.95); opacity: 0; }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .container-wrapper {
-            max-width: 1040px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 0 12px;
-            animation: fadeInDown 0.5s ease-out;
+            padding: 0 14px;
+            animation: fadeInDown 0.4s ease-out;
         }
 
-        /* Top Navigation Bar */
+        /* Top Bar */
         .top-navbar {
             background: rgba(15, 23, 42, 0.85);
             backdrop-filter: var(--glass-blur);
@@ -81,7 +80,8 @@
             top: 0;
             z-index: 1000;
             padding: 12px 0;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
         }
 
         .nav-brand {
@@ -92,7 +92,7 @@
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
         }
 
@@ -106,15 +106,15 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--border);
             color: var(--text-muted);
-            padding: 9px 18px;
+            padding: 9px 16px;
             border-radius: 12px;
             font-weight: 700;
-            font-size: 13.5px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.25s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .nav-tab-btn:hover {
@@ -123,10 +123,10 @@
         }
 
         .nav-tab-btn.active {
-            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(192, 132, 252, 0.2));
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.25), rgba(192, 132, 252, 0.25));
             border-color: var(--primary-cyan);
             color: var(--primary-cyan);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.25);
+            box-shadow: 0 0 18px rgba(0, 242, 254, 0.3);
         }
 
         .app-view {
@@ -134,20 +134,31 @@
         }
         .app-view.active-view {
             display: block;
-            animation: fadeInDown 0.4s ease-out;
+            animation: fadeInDown 0.35s ease-out;
+        }
+
+        /* Glass Cards */
+        .card-custom {
+            background: var(--bg-card);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
         }
 
         .hero-banner {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7));
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.65));
             backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 24px;
-            padding: 40px 32px;
-            margin-bottom: 28px;
+            padding: 32px 24px;
+            margin-bottom: 24px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
             text-align: center;
         }
 
@@ -158,121 +169,25 @@
             background: linear-gradient(90deg, transparent, var(--primary-cyan), var(--accent-gold), var(--accent-purple), transparent);
         }
 
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            color: #34d399;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #34d399;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .status-dot::after {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; right: -4px; bottom: -4px;
-            border-radius: 50%;
-            background: #34d399;
-            animation: statusPing 2s infinite ease-out;
-        }
-
-        .author-tag {
-            font-size: 12.5px;
-            color: var(--accent-gold);
-            font-weight: 700;
-            background: rgba(251, 191, 36, 0.12);
-            padding: 6px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(251, 191, 36, 0.25);
-            display: inline-block;
-        }
-
         h1.hero-title {
-            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 45%, #c084fc 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            font-size: 34px;
+            font-size: 30px;
             font-weight: 800;
-            margin: 18px 0 14px 0;
-            letter-spacing: -0.5px;
-            filter: drop-shadow(0 0 25px rgba(0, 242, 254, 0.35));
-        }
-
-        .hero-desc {
-            color: var(--text-muted);
-            font-size: 15px;
-            max-width: 780px;
-            margin: 0 auto 24px auto;
-            line-height: 1.7;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card:hover {
-            border-color: rgba(0, 242, 254, 0.4);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 242, 254, 0.15);
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            background: rgba(0, 242, 254, 0.1);
-            border: 1px solid rgba(0, 242, 254, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            color: var(--primary-cyan);
-        }
-
-        .stat-info .val {
-            font-size: 24px;
-            font-weight: 800;
-            color: #ffffff;
-            line-height: 1.1;
-        }
-
-        .stat-info .lbl {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-weight: 700;
-            text-transform: uppercase;
+            margin: 14px 0 10px 0;
         }
 
         .loader-banner {
             background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.95));
             border: 1px solid var(--primary-cyan);
             border-radius: 18px;
-            padding: 20px 24px;
-            margin-bottom: 28px;
+            padding: 16px 20px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 18px;
+            gap: 14px;
             animation: pulseNeon 4s infinite ease-in-out;
         }
 
@@ -282,57 +197,194 @@
             white-space: nowrap;
             font-family: 'Fira Code', monospace;
             color: var(--primary-cyan);
-            font-size: 13.5px;
-            background: rgba(3, 7, 18, 0.85);
-            padding: 12px 18px;
-            border-radius: 12px;
+            font-size: 12.5px;
+            background: rgba(3, 7, 18, 0.9);
+            padding: 10px 14px;
+            border-radius: 10px;
             flex: 1;
             border: 1px solid rgba(0, 242, 254, 0.3);
         }
 
-        .card-custom {
-            background: var(--bg-card);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 28px;
-            margin-bottom: 28px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
-        }
-
-        h2.card-title-custom {
-            font-size: 19px;
-            color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 22px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 14px;
-            display: flex;
+        /* Buttons */
+        .btn-custom {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+            display: inline-flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 700;
+            justify-content: center;
+            gap: 7px;
+            transition: all 0.25s ease;
         }
 
-        label.form-label-custom {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 700;
-            font-size: 12.5px;
-            color: #cbd5e1;
+        .btn-custom:active { transform: scale(0.96); }
+
+        .btn-primary-cyan { 
+            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); 
+            color: #031327; 
+            font-weight: 800;
+            box-shadow: 0 4px 18px rgba(0, 242, 254, 0.35);
+        }
+        .btn-primary-cyan:hover { box-shadow: 0 6px 24px rgba(0, 242, 254, 0.6); color: #000; }
+
+        .btn-secondary-custom {
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            border: 1px solid var(--border);
+        }
+        .btn-secondary-custom:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+
+        .btn-warning-custom {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #1a1000;
+            font-weight: 800;
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%);
+            color: #ffffff;
+        }
+
+        .btn-success-custom {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: #ffffff;
+            font-weight: 800;
+        }
+
+        .btn-submit-main {
+            width: 100%;
+            padding: 16px;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #00f2fe 0%, #7928ca 50%, #ff0080 100%);
+            background-size: 200% auto;
+            color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.4);
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            border: none;
+            transition: all 0.4s ease;
+        }
+        .btn-submit-main:hover { 
+            background-position: right center;
+            box-shadow: 0 14px 40px rgba(255, 0, 128, 0.65);
+            color: #fff;
+        }
+
+        /* Tab Accordion Box UI */
+        .tab-item-box {
+            background: rgba(15, 23, 42, 0.85);
+            margin-bottom: 16px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+        }
+
+        .tab-header-bar {
+            padding: 14px 18px;
+            background: rgba(30, 41, 59, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .item-list-container {
+            padding: 14px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(8, 12, 24, 0.6);
+        }
+
+        .item-list-container.hidden-list { display: none; }
+
+        .script-card-item { 
+            background: rgba(10, 15, 29, 0.9); 
+            padding: 16px; 
+            margin: 10px 0; 
+            border-radius: 14px; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            transition: all 0.25s ease;
+        }
+
+        /* Modal Backdrop */
+        .modal-custom-backdrop {
+            display: none; 
+            position: fixed; 
+            z-index: 3000; 
+            left: 0; top: 0; 
+            width: 100%; height: 100%;
+            background-color: rgba(3, 7, 18, 0.88); 
+            backdrop-filter: blur(16px);
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .modal-custom-backdrop.active { display: flex; }
+
+        .modal-dialog-custom {
+            background: linear-gradient(145deg, #0f172a, #1e293b); 
+            padding: 28px;
+            border-radius: 22px; 
+            width: 100%; 
+            max-width: 580px; 
+            border: 1px solid var(--primary-cyan);
+            box-shadow: 0 25px 70px rgba(0, 242, 254, 0.35);
+            animation: fadeInDown 0.3s ease-out;
+        }
+
+        /* Loading Progress Card */
+        .loading-progress-card {
+            background: rgba(10, 15, 29, 0.95);
+            border: 2px solid var(--primary-cyan);
+            border-radius: 22px;
+            padding: 26px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 0 50px rgba(0, 242, 254, 0.4);
+            text-align: center;
+        }
+
+        .spinner-sci-fi {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(0, 242, 254, 0.15);
+            border-top: 4px solid var(--primary-cyan);
+            border-bottom: 4px solid var(--accent-purple);
+            border-radius: 50%;
+            animation: spinSlow 0.9s linear infinite;
+            margin: 0 auto 14px auto;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 8px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe, #c084fc);
+            width: 0%;
+            transition: width 0.25s ease-out;
         }
 
         .form-control-custom, .form-select-custom {
             width: 100%;
-            padding: 13px 16px;
+            padding: 12px 14px;
             background-color: var(--bg-input);
             border: 1px solid var(--border);
             border-radius: 12px;
             color: var(--text-main);
-            font-family: inherit;
-            font-size: 14px;
+            font-size: 13.5px;
             transition: all 0.25s ease;
         }
 
@@ -349,321 +401,42 @@
             color: #fff;
         }
 
-        .btn-custom {
-            padding: 12px 22px;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 9px;
-            user-select: none;
-            transition: all 0.25s ease;
-        }
-
-        .btn-custom:active { transform: scale(0.96); }
-
-        .btn-primary-cyan { 
-            background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); 
-            color: #031327; 
-            font-weight: 800;
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.35);
-        }
-        .btn-primary-cyan:hover { 
-            box-shadow: 0 6px 26px rgba(0, 242, 254, 0.6); 
-            transform: translateY(-2px); 
-            color: #000;
-        }
-
-        .btn-danger-custom { 
-            background: linear-gradient(135deg, #ef4444 0%, #f43f5e 100%); 
-            color: #ffffff; 
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
-        }
-        .btn-danger-custom:hover { 
-            box-shadow: 0 6px 22px rgba(239, 68, 68, 0.55); 
-            transform: translateY(-2px); 
-            color: #fff;
-        }
-
-        .btn-warning-custom { 
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); 
-            color: #1a1000; 
-            font-weight: 800;
-            box-shadow: 0 4px 16px rgba(251, 191, 36, 0.35);
-        }
-        .btn-warning-custom:hover { 
-            box-shadow: 0 6px 22px rgba(251, 191, 36, 0.55); 
-            transform: translateY(-2px); 
-        }
-
-        .btn-success-custom { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
-            color: #ffffff; 
-            box-shadow: 0 4px 16px rgba(16, 185, 129, 0.35);
-        }
-        .btn-success-custom:hover { 
-            box-shadow: 0 6px 22px rgba(16, 185, 129, 0.55); 
-            transform: translateY(-2px); 
-            color: #fff;
-        }
-
-        .btn-secondary-custom {
-            background: rgba(255, 255, 255, 0.08);
-            color: #e2e8f0;
-            border: 1px solid var(--border);
-        }
-        .btn-secondary-custom:hover { 
-            background: rgba(255, 255, 255, 0.16); 
-            color: #fff;
-        }
-
-        .btn-submit-main {
+        /* Status Pop-up Modals */
+        .status-popup-card {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            border-radius: 24px;
+            padding: 30px 24px;
             width: 100%;
-            padding: 18px;
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 1.2px;
-            background: linear-gradient(135deg, #00f2fe 0%, #7928ca 50%, #ff0080 100%);
-            background-size: 200% auto;
-            color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 12px 35px rgba(255, 0, 128, 0.4);
-            text-transform: uppercase;
-            border: none;
-            transition: all 0.4s ease;
-        }
-        .btn-submit-main:hover { 
-            background-position: right center;
-            box-shadow: 0 16px 45px rgba(255, 0, 128, 0.65);
-            transform: translateY(-2px);
-            color: #fff;
-        }
-
-        .tree-controls-bar {
-            display: flex;
-            gap: 14px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .search-input-wrapper {
-            flex: 1;
-            min-width: 260px;
-            position: relative;
-        }
-
-        .search-input-wrapper input {
-            padding-left: 44px;
-            background: rgba(10, 15, 29, 0.95);
-        }
-
-        .search-input-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--primary-cyan);
-            font-size: 15px;
-        }
-
-        .tab-item-box { 
-            background: rgba(15, 23, 42, 0.85); 
-            margin: 16px 0; 
-            border-radius: 16px; 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .tab-item-box:hover {
-            border-color: rgba(251, 191, 36, 0.35);
-        }
-
-        .tab-header-bar {
-            padding: 18px 22px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(30, 41, 59, 0.45);
-            cursor: pointer;
-            user-select: none;
-        }
-        .tab-header-bar:hover {
-            background: rgba(30, 41, 59, 0.75);
-        }
-
-        .collapse-indicator {
-            font-size: 13px;
-            color: var(--primary-cyan);
-            transition: transform 0.3s ease;
-            display: inline-block;
-        }
-        .collapse-indicator.collapsed {
-            transform: rotate(-90deg);
-        }
-
-        .item-list-container { 
-            padding: 16px 22px; 
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            background: rgba(10, 15, 29, 0.5);
-        }
-        .item-list-container.hidden-list { display: none; }
-
-        .script-card-item { 
-            background: rgba(10, 15, 29, 0.95); 
-            padding: 18px; 
-            margin: 12px 0; 
-            border-radius: 14px; 
-            border: 1px solid rgba(255, 255, 255, 0.06); 
-            transition: all 0.25s ease;
-            cursor: pointer;
-        }
-        .script-card-item:hover {
-            border-color: rgba(0, 242, 254, 0.4);
-            transform: translateX(6px);
-            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.15);
-        }
-
-        .script-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-        .desc-text-box {
-            font-size: 13.5px;
-            color: #94a3b8;
-            margin-top: 10px;
-            line-height: 1.6;
-        }
-        .desc-text-box.truncated {
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .btn-expand-desc {
-            background: none;
-            border: none;
-            color: var(--primary-cyan);
-            padding: 0;
-            font-size: 12.5px;
-            cursor: pointer;
-            margin-top: 6px;
-            font-weight: 700;
-        }
-
-        .scriptblox-preview-box {
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--primary-cyan);
-            border-radius: 16px;
-            padding: 22px;
-            margin-top: 20px;
-            box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
+            max-width: 440px;
+            text-align: center;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
             animation: fadeInDown 0.3s ease-out;
         }
-
-        .modal-custom-backdrop {
-            display: none; 
-            position: fixed; 
-            z-index: 3000; 
-            left: 0; top: 0; 
-            width: 100%; height: 100%;
-            background-color: rgba(3, 7, 18, 0.85); 
-            backdrop-filter: blur(14px);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        .modal-custom-backdrop.active { display: flex; }
-
-        .modal-dialog-custom {
-            background: linear-gradient(145deg, #0f172a, #1e293b); 
-            padding: 32px;
-            border-radius: 24px; 
-            width: 100%; 
-            max-width: 640px; 
-            border: 1px solid var(--primary-cyan);
-            box-shadow: 0 25px 65px rgba(0, 242, 254, 0.3);
-            animation: fadeInDown 0.35s ease-out;
-        }
-
-        #toast-wrapper {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .toast-custom {
-            min-width: 300px;
-            padding: 16px 20px;
-            border-radius: 14px;
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transform: translateX(130%);
-            transition: transform 0.35s ease;
-        }
-        .toast-custom.show { transform: translateX(0); }
-        .toast-success { border-left: 5px solid var(--success); }
-        .toast-error { border-left: 5px solid var(--danger); }
-        .toast-info { border-left: 5px solid var(--primary-cyan); }
-
-        code {
-            background: rgba(0, 242, 254, 0.12);
-            color: var(--primary-cyan);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-family: 'Fira Code', monospace;
-            font-size: 12.5px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-tabs-menu { width: 100%; justify-content: space-between; }
-            .nav-tab-btn { padding: 7px 12px; font-size: 12px; }
-            .hero-banner { padding: 24px 16px; }
-            h1.hero-title { font-size: 24px; }
-            .loader-banner { flex-direction: column; align-items: stretch; }
-            .tab-header-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .script-actions { width: 100%; justify-content: flex-end; }
-            #toast-wrapper { left: 16px; right: 16px; top: 16px; }
-        }
+        .status-popup-success { border-color: var(--success); }
+        .status-popup-error { border-color: var(--danger); }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-<div id="toast-wrapper"></div>
-
-<!-- Top Sticky Navigation Bar -->
+<!-- Top Sticky Navbar -->
 <div class="top-navbar">
     <div class="container-wrapper d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div class="nav-brand" onclick="switchTab('welcome')">
             <i class="fa-solid fa-bolt text-info"></i> ANSCRIPT HUB V2
         </div>
-        <div class="nav-tabs-menu">
+        <div class="nav-tabs-menu" id="nav-tabs-container">
             <button class="nav-tab-btn active" id="btn-tab-welcome" onclick="switchTab('welcome')">
                 <i class="fa-solid fa-house"></i> Giới Thiệu
             </button>
-            <button class="nav-tab-btn" id="btn-tab-dashboard" onclick="switchTab('dashboard')">
+            <button class="nav-tab-btn" id="btn-tab-dashboard" style="display: none;" onclick="switchTab('dashboard')">
                 <i class="fa-solid fa-list-check"></i> Quản Lý
             </button>
-            <button class="nav-tab-btn" id="btn-tab-create" onclick="switchTab('create')">
+            <button class="nav-tab-btn" id="btn-tab-create" style="display: none;" onclick="switchTab('create')">
                 <i class="fa-solid fa-circle-plus"></i> Create
             </button>
-            <button class="nav-tab-btn" id="btn-tab-home-config" onclick="switchTab('home-config')">
-                <i class="fa-solid fa-sliders"></i> Home
+            <button class="nav-tab-btn" id="btn-tab-home-config" style="display: none;" onclick="switchTab('home-config')">
+                <i class="fa-solid fa-sliders"></i> Thông Tin
             </button>
         </div>
     </div>
@@ -671,66 +444,113 @@
 
 <div class="container-wrapper">
 
-    <!-- VIEW 1: WELCOME / GIỚI THIỆU -->
+    <!-- VIEW 1: WELCOME / GIỚI THIỆU (PUBLIC VIEW - XEM & COPY) -->
     <div class="app-view active-view" id="view-welcome">
         <div class="hero-banner">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <div class="status-badge">
-                    <span class="status-dot"></span> SYSTEM ONLINE
+                <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.35); color: #34d399; padding: 5px 14px; border-radius: 30px; font-size: 11.5px; font-weight: 700;">
+                    <i class="fa-solid fa-circle text-success me-1"></i> SYSTEM ONLINE
                 </div>
-                <div class="author-tag"><i class="fa-solid fa-gem me-1"></i> CREDITS: HOTHIPTV</div>
+                <div style="font-size: 12px; color: var(--accent-gold); font-weight: 700; background: rgba(251, 191, 36, 0.12); padding: 5px 14px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.25);">
+                    <i class="fa-solid fa-gem me-1"></i> CREATOR: HOTHIPTV
+                </div>
             </div>
-            <h1 class="hero-title"><i class="fa-solid fa-bolt me-2"></i>ANSCRIPT HUB V2 – QUẢN TRỊ TỐI CAO</h1>
-            <p class="hero-desc">
-                Chào mừng bạn đến với Bảng Điều Khiển Anscript Hub V2. Hệ thống giúp quản lý các Tab, Script Roblox, phân tích cú pháp siêu tốc và tự động đồng bộ hóa lên Server Render & GitHub.
+            <h1 class="hero-title"><i class="fa-solid fa-bolt me-2"></i>ANSCRIPT HUB V2</h1>
+            <p style="color: var(--text-muted); font-size: 14px; max-width: 780px; margin: 0 auto 18px auto; line-height: 1.6;">
+                Chào mừng bạn đến với Anscript Hub V2. Dưới đây là danh sách toàn bộ Script đang hoạt động từ Server Node.js!
             </p>
-            <button class="btn-custom btn-primary-cyan btn-lg px-4 py-3 fs-6" onclick="switchTab('dashboard')">
-                <i class="fa-solid fa-rocket me-2"></i> BẮT ĐẦU QUẢN TRỊ HUB
-            </button>
         </div>
 
-        <div class="loader-banner">
-            <div style="min-width: 0; flex: 1;">
-                <div style="font-weight: 700; font-size: 12.5px; color: var(--primary-cyan); margin-bottom: 6px; letter-spacing: 0.8px;">
-                    <i class="fa-solid fa-rocket me-1"></i> SCRIPT LOADER CHÍNH CỦA HUB (ROBLOX):
-                </div>
-                <div class="loader-text" id="main-hub-loader">loadstring(game:HttpGet("https://raw.githubusercontent.com/hothiptv/AnscriptHubv2/refs/heads/main/Script/AnscriptHub.lua"))()</div>
-            </div>
-            <button class="btn-custom btn-primary-cyan" onclick="copyMainLoader()">
-                <i class="fa-regular fa-copy"></i> Sao Chép
-            </button>
-        </div>
-    </div>
-
-    <!-- VIEW 2: QUẢN LÝ TỔNG QUAN -->
-    <div class="app-view" id="view-dashboard">
+        <!-- Stats Counter Card At Home -->
         <div class="row g-3 mb-4">
             <div class="col-6">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-folder-tree"></i></div>
-                    <div class="stat-info">
-                        <div class="val" id="stat-total-tabs">0</div>
-                        <div class="lbl">Tổng Số Tab</div>
+                <div class="card-custom p-3 d-flex align-items-center gap-3 mb-0">
+                    <div style="width: 42px; height: 45px; border-radius: 12px; background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary-cyan);">
+                        <i class="fa-solid fa-folder-tree"></i>
+                    </div>
+                    <div>
+                        <div class="fs-4 fw-bold text-white" id="home-total-tabs">0</div>
+                        <div class="text-muted fw-bold text-uppercase" style="font-size: 10.5px;">Tổng Số Tab</div>
                     </div>
                 </div>
             </div>
             <div class="col-6">
-                <div class="stat-card">
-                    <div class="stat-icon"><i class="fa-solid fa-code"></i></div>
-                    <div class="stat-info">
-                        <div class="val" id="stat-total-scripts">0</div>
-                        <div class="lbl">Tổng Số Script</div>
+                <div class="card-custom p-3 d-flex align-items-center gap-3 mb-0">
+                    <div style="width: 42px; height: 45px; border-radius: 12px; background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary-cyan);">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <div class="fs-4 fw-bold text-white" id="home-total-scripts">0</div>
+                        <div class="text-muted fw-bold text-uppercase" style="font-size: 10.5px;">Tổng Số Script</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loader Copy Box -->
+        <div class="loader-banner">
+            <div style="min-width: 0; flex: 1;">
+                <div style="font-weight: 700; font-size: 12px; color: var(--primary-cyan); margin-bottom: 4px; letter-spacing: 0.8px;">
+                    <i class="fa-solid fa-code me-1"></i> LOADER CHÍNH CỦA HUB (ROBLOX):
+                </div>
+                <div class="loader-text" id="main-hub-loader">loadstring(game:HttpGet("https://raw.githubusercontent.com/hothiptv/AnscriptHubv2/refs/heads/main/Script/AnscriptHub.lua"))()</div>
+            </div>
+            <button class="btn-custom btn-primary-cyan" onclick="copyMainLoader()">
+                <i class="fa-regular fa-copy"></i> Sao Chép Script
+            </button>
+        </div>
+
+        <!-- Public Script List (Read Only) -->
+        <div class="card-custom">
+            <h2 class="fs-6 fw-bold text-white mb-3 border-bottom border-secondary pb-2 flex items-center gap-2">
+                <i class="fa-solid fa-scroll text-info"></i> DANH SÁCH SCRIPT ĐANG HOẠT ĐỘNG
+            </h2>
+            <div id="public-scripts-container">
+                <p class="text-center text-muted py-4">Đang tải dữ liệu từ Server Node.js...</p>
+            </div>
+        </div>
+
+        <!-- Admin Trigger Button -->
+        <div class="text-center mt-4 mb-3">
+            <button class="btn-custom btn-secondary-custom px-4 py-2.5 fs-6" onclick="triggerAdminLogin()">
+                <i class="fa-solid fa-user-shield text-info me-2"></i> BẢNG QUẢN LÝ (DÀNH CHO ADMIN)
+            </button>
+        </div>
+    </div>
+
+    <!-- VIEW 2: QUẢN LÝ TỔNG QUAN (ADMIN ONLY) -->
+    <div class="app-view" id="view-dashboard">
+        <!-- Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <div class="card-custom p-3 d-flex align-items-center gap-3 mb-0">
+                    <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary-cyan);">
+                        <i class="fa-solid fa-folder-tree"></i>
+                    </div>
+                    <div>
+                        <div class="fs-4 fw-bold text-white" id="stat-total-tabs">0</div>
+                        <div class="text-muted fw-bold text-uppercase" style="font-size: 10.5px;">Tổng Số Tab</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card-custom p-3 d-flex align-items-center gap-3 mb-0">
+                    <div style="width: 42px; height: 42px; border-radius: 12px; background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--primary-cyan);">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <div>
+                        <div class="fs-4 fw-bold text-white" id="stat-total-scripts">0</div>
+                        <div class="text-muted fw-bold text-uppercase" style="font-size: 10.5px;">Tổng Số Script</div>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="card-custom">
-            <h2 class="card-title-custom"><i class="fa-solid fa-sliders text-warning"></i> Cấu Trúc Script Và Quản Lý</h2>
+            <h2 class="fs-6 fw-bold text-white mb-3 border-bottom border-secondary pb-2"><i class="fa-solid fa-sliders text-warning me-2"></i> Cấu Trúc Và Quản Lý Chi Tiết</h2>
 
-            <div class="tree-controls-bar">
-                <div class="search-input-wrapper">
-                    <i class="fa-solid fa-magnifying-glass search-input-icon"></i>
+            <div class="d-flex gap-2 mb-3 flex-wrap">
+                <div class="flex-grow-1 min-w-[200px]">
                     <input type="text" class="form-control-custom" id="search-script-input" placeholder="Tìm kiếm Tab hoặc Script..." oninput="onSearchInput()">
                 </div>
                 <button class="btn-custom btn-secondary-custom" onclick="toggleAllTabs(true)">
@@ -745,53 +565,53 @@
         </div>
     </div>
 
-    <!-- VIEW 3: TẠO MỚI -->
+    <!-- VIEW 3: TẠO MỚI SCRIPT (CHẾ ĐỘ 3 HỖ TRỢ 30 LINK) -->
     <div class="app-view" id="view-create">
         <div class="card-custom">
-            <h2 class="card-title-custom"><i class="fa-solid fa-square-plus text-success"></i> Thêm Thành Phần Vào Hub (Create)</h2>
+            <h2 class="fs-6 fw-bold text-white mb-3 border-bottom border-secondary pb-2"><i class="fa-solid fa-square-plus text-success me-2"></i> Thêm Script Vào Hub (Create)</h2>
             
-            <div class="mb-4">
-                <label class="form-label-custom">Phương thức nhập dữ liệu:</label>
+            <div class="mb-3">
+                <label class="form-label text-white-50 fw-bold fs-6">Phương thức nhập dữ liệu:</label>
                 <select class="form-select-custom" id="input-mode" onchange="toggleInputMode()">
                     <option value="manual">1. Nhập thủ công (Form)</option>
                     <option value="syntax">2. Nhập nhanh bằng lệnh cú pháp (/s/ và /t/)</option>
-                    <option value="scriptblox">3. Lấy dữ liệu tự động từ Scriptblox (Multi-Link Pro)</option>
+                    <option value="scriptblox">3. Lấy dữ liệu tự động từ Scriptblox (Chế độ 3 - Tối đa 30 Link)</option>
                 </select>
             </div>
 
-            <!-- Form 1: Nhập Thủ Công -->
+            <!-- Form 1: Manual -->
             <div id="manual-input-block">
                 <div class="row g-3">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label-custom">Loại thành phần cần tạo:</label>
+                        <label class="form-label text-white-50 fw-bold fs-6">Loại thành phần:</label>
                         <select class="form-select-custom" id="add-type" onchange="toggleAddFields()">
                             <option value="tab">Create Tab (Tạo Tab Mới)</option>
                             <option value="script">Create Script (Thêm Script)</option>
                         </select>
                     </div>
                     <div class="col-md-6 mb-3" id="field-tab-name">
-                        <label class="form-label-custom">Tên Tab Mới</label>
+                        <label class="form-label text-white-50 fw-bold fs-6">Tên Tab Mới</label>
                         <input type="text" class="form-control-custom" id="new-tab-name" placeholder="Nhập tên Tab...">
                     </div>
                 </div>
 
                 <div id="script-fields" style="display: none;">
                     <div class="mb-3">
-                        <label class="form-label-custom">Chọn Tab Mục Tiêu (Bắt buộc)</label>
+                        <label class="form-label text-white-50 fw-bold fs-6">Chọn Tab Mục Tiêu</label>
                         <select class="form-select-custom" id="target-tab-select"></select>
                     </div>
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
-                            <label class="form-label-custom">Tên Script</label>
+                            <label class="form-label text-white-50 fw-bold fs-6">Tên Script</label>
                             <input type="text" class="form-control-custom" id="new-script-name" placeholder="Ví dụ: Auto Farm Blox Fruit">
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label-custom">Mô tả ngắn</label>
+                            <label class="form-label text-white-50 fw-bold fs-6">Mô tả ngắn</label>
                             <input type="text" class="form-control-custom" id="new-script-desc" placeholder="Ví dụ: Auto Farm, No Key...">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label-custom">Mã nguồn Script (Content Code / Link Raw)</label>
+                        <label class="form-label text-white-50 fw-bold fs-6">Mã nguồn Script (Code/Link Raw)</label>
                         <textarea class="form-control-custom" id="new-script-content" rows="4" placeholder="loadstring(game:HttpGet(...))()"></textarea>
                     </div>
                 </div>
@@ -801,168 +621,210 @@
                 </button>
             </div>
 
-            <!-- Form 2: Cú Pháp Nhập Nhanh -->
+            <!-- Form 2: Syntax -->
             <div id="syntax-input-block" style="display: none;">
                 <div class="mb-3">
-                    <label class="form-label-custom">Dán mã cú pháp (Nhiều dòng cùng lúc):</label>
-                    <textarea class="form-control-custom" id="syntax-code" rows="5" placeholder="Cú pháp ví dụ:&#10;/t/Main Tab&#10;/s/Auto Farm/Hỗ trợ cày cấp/loadstring(...)()/Main Tab"></textarea>
+                    <label class="form-label text-white-50 fw-bold fs-6">Dán mã cú pháp:</label>
+                    <textarea class="form-control-custom" id="syntax-code" rows="5" placeholder="/t/Main Tab&#10;/s/Auto Farm/Mô tả/loadstring(...)()/Main Tab"></textarea>
                 </div>
-                <p style="font-size: 13px; color: var(--text-muted);" class="mb-3">
-                    * Cú pháp Tab: <code>/t/Tên Tab</code><br>
-                    * Cú pháp Script: <code>/s/Tên script/Mô tả/mã script/Tên tab</code>
-                </p>
                 <button class="btn-custom btn-primary-cyan" onclick="parseSyntaxInput()">
                     <i class="fa-solid fa-bolt-lightning"></i> Phân Tích Và Nhập
                 </button>
             </div>
 
-            <!-- Form 3: Scriptblox Multi-Link Pro (Độ 1 & Độ 2) -->
+            <!-- Form 3: Scriptblox 30 Links -->
             <div id="scriptblox-input-block" style="display: none;">
-                <div class="row g-3 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label-custom">Chọn Độ (Chế độ quét):</label>
-                        <select class="form-select-custom" id="sb-mode-degree" onchange="toggleSbDegree()">
-                            <option value="1">Độ 1: Lấy 1 Link đơn</option>
-                            <option value="2">Độ 2: Lấy nhiều Link (Tối đa 10 link, cách nhau xuống dòng hoặc dấu `;`)</option>
-                        </select>
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fw-bold fs-6"><i class="fa-solid fa-list me-1 text-info"></i> Dán danh sách Link / ID Scriptblox (Tối đa 30 Link, phân cách bằng xuống dòng hoặc `;`):</label>
+                    <textarea class="form-control-custom" id="scriptblox-multi-urls" rows="6" placeholder="https://scriptblox.com/script/Universal-Script-Atherhub-41929&#10;https://scriptblox.com/script/Blox-Fruits-Auto-Farm-20000"></textarea>
                 </div>
 
-                <div class="mb-3" id="sb-single-input-wrapper">
-                    <label class="form-label-custom"><i class="fa-solid fa-link me-1 text-info"></i> Dán Link hoặc ID Scriptblox:</label>
-                    <input type="text" class="form-control-custom" id="scriptblox-url" placeholder="https://scriptblox.com/script/...">
-                </div>
-
-                <div class="mb-3" id="sb-multi-input-wrapper" style="display: none;">
-                    <label class="form-label-custom"><i class="fa-solid fa-list me-1 text-info"></i> Dán danh sách Link / ID (Tối đa 10 link, phân cách bằng xuống dòng hoặc `;`):</label>
-                    <textarea class="form-control-custom" id="scriptblox-multi-urls" rows="4" placeholder="https://scriptblox.com/script/link-1&#10;https://scriptblox.com/script/link-2; https://scriptblox.com/script/link-3"></textarea>
-                </div>
-
-                <!-- 2 Nút Lấy Dữ Liệu: Chuẩn vs Nhanh -->
                 <div class="d-flex gap-2 flex-wrap mb-3">
-                    <button class="btn-custom btn-primary-cyan" onclick="fetchFromScriptblox('standard')">
-                        <i class="fa-solid fa-shield-halved"></i> Lấy Dữ Liệu Chuẩn (6 Proxy Bypass)
-                    </button>
-                    <button class="btn-custom btn-success-custom" onclick="fetchFromScriptblox('fast')">
-                        <i class="fa-solid fa-bolt"></i> Lấy Dữ Liệu Nhanh (1 Proxy)
+                    <button class="btn-custom btn-primary-cyan px-4 py-2.5" onclick="startScriptbloxMultiFetch()">
+                        <i class="fa-solid fa-download"></i> BẮT ĐẦU TẢI 30 LINK SCRIPTBLOX
                     </button>
                 </div>
 
-                <div id="sb-status-box" style="display:none;" class="alert alert-info py-2 px-3 mb-3 font-monospace fs-6"></div>
-
-                <!-- Khung Xem Trước & Chỉnh Sửa Nhiều Kết Quả -->
-                <div id="scriptblox-preview-card" class="scriptblox-preview-box" style="display: none;">
-                    <h4 class="fs-6 fw-bold text-info mb-3"><i class="fa-solid fa-eye me-1"></i> XEM TRƯỚC VÀ CHỈNH SỬA KẾT QUẢ SCRIPTBLOX</h4>
+                <!-- Preview Board After Fetching (Tối Ưu UI Rộng Rãi) -->
+                <div id="scriptblox-preview-card" style="display: none;" class="p-3 rounded-2xl border border-info bg-slate-900 mt-3">
+                    <h4 class="fs-6 fw-bold text-info mb-2"><i class="fa-solid fa-eye me-1"></i> XEM TRƯỚC DỮ LIỆU TẢI THÀNH CÔNG</h4>
                     
-                    <!-- Áp dụng tab chung cho tất cả -->
-                    <div class="p-3 mb-3 rounded" style="background: rgba(255,255,255,0.04); border: 1px solid var(--border);">
-                        <label class="form-label-custom text-warning">Áp dụng chung Tab cho tất cả kết quả dưới đây:</label>
-                        <div class="input-group">
-                            <select class="form-select-custom" id="sb-global-target-tab"></select>
-                            <button class="btn-custom btn-warning-custom px-3" onclick="applyGlobalTabToAll()">Áp Dụng Cho Tất Cả</button>
+                    <div class="p-3 mb-3 rounded-xl bg-slate-950 border border-secondary">
+                        <label class="form-label text-warning fw-bold fs-6 mb-2">Áp dụng chung Tab cho tất cả script dưới đây:</label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <select class="form-select-custom flex-grow-1" id="sb-global-target-tab"></select>
+                            <button class="btn-custom btn-warning-custom px-4" onclick="applyGlobalTabToAll()">Áp dụng tất cả</button>
                         </div>
                     </div>
 
-                    <!-- Danh sách các script được bóc tách -->
-                    <div id="sb-fetched-items-container" class="d-flex flex-column gap-3 mb-4"></div>
+                    <div id="sb-fetched-items-container" class="d-flex flex-column gap-3 mb-3"></div>
 
-                    <button class="btn-custom btn-success-custom w-100 py-3 fs-6 fw-bold" onclick="confirmAddAllScriptblox()">
-                        <i class="fa-solid fa-circle-check me-1"></i> HOÀN TẤT: THÊM TẤT CẢ VÀO HUB
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button class="btn-custom btn-success-custom flex-1 py-2.5 fs-6" onclick="confirmAddAllScriptblox()">
+                            <i class="fa-solid fa-check-circle"></i> ĐỒNG Ý CHO VÔ HUB
+                        </button>
+                        <button class="btn-custom btn-secondary-custom px-3" onclick="startScriptbloxMultiFetch()">
+                            <i class="fa-solid fa-rotate-right"></i> Tải lại
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- VIEW 4: CẤU HÌNH HOME -->
+    <!-- VIEW 4: THÔNG TIN (HOME CONFIG) -->
     <div class="app-view" id="view-home-config">
         <div class="card-custom">
-            <h2 class="card-title-custom"><i class="fa-solid fa-house-gear text-info"></i> Chỉnh Sửa Trang Chủ (File "Home")</h2>
+            <h2 class="fs-6 fw-bold text-white mb-3 border-bottom border-secondary pb-2"><i class="fa-solid fa-house-gear text-info me-2"></i> Thông Tin Trang Chủ</h2>
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
-                    <label class="form-label-custom">Tên Hub</label>
+                    <label class="form-label text-white-50 fw-bold fs-6">Tên Hub</label>
                     <input type="text" class="form-control-custom" id="hub-name" placeholder="Nhập tên Hub...">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label-custom">Phiên bản</label>
-                    <input type="text" class="form-control-custom" id="hub-version" placeholder="v1.0">
+                    <label class="form-label text-white-50 fw-bold fs-6">Phiên bản</label>
+                    <input type="text" class="form-control-custom" id="hub-version" placeholder="v2.0">
                 </div>
             </div>
             <div class="mb-0">
-                <label class="form-label-custom">Lời Giới Thiệu (Introduction)</label>
-                <textarea class="form-control-custom" id="hub-intro" rows="4" placeholder="Nhập lời chào mừng..."></textarea>
+                <label class="form-label text-white-50 fw-bold fs-6">Lời Giới Thiệu</label>
+                <textarea class="form-control-custom" id="hub-intro" rows="4" placeholder="Nhập lời chào..."></textarea>
             </div>
         </div>
     </div>
 
-    <button class="btn-submit-main" onclick="saveDataToServer()">
-        <i class="fa-solid fa-floppy-disk me-2"></i> LƯU TOÀN BỘ DỮ LIỆU LÊN SERVER RENDER
+    <!-- Save Button -->
+    <button class="btn-submit-main" id="btn-save-all" style="display: none;" onclick="saveDataToServer()">
+        <i class="fa-solid fa-floppy-disk me-2"></i> LƯU TOÀN BỘ DỮ LIỆU LÊN SERVER
     </button>
 </div>
 
-<!-- Custom Pop-up Confirm Modal -->
-<div id="confirm-modal" class="modal-custom-backdrop">
-    <div class="modal-dialog-custom text-center" style="max-width: 440px;">
-        <div style="font-size: 42px; color: var(--warning);" class="mb-3">
-            <i class="fa-solid fa-triangle-exclamation"></i>
-        </div>
-        <h3 id="confirm-modal-title" style="color:#fff; font-weight:800;" class="mb-2">Xác Nhận Hành Động</h3>
-        <p id="confirm-modal-msg" style="color: var(--text-muted); font-size: 14.5px;" class="mb-4"></p>
-        <div class="d-flex gap-2 justify-content-center">
-            <button class="btn-custom btn-danger-custom" id="confirm-modal-btn-yes">
-                <i class="fa-solid fa-trash-can me-1"></i> Đồng Ý Xóa
-            </button>
-            <button class="btn-custom btn-secondary-custom" onclick="closeConfirmModal()">Hủy Bỏ</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Sửa Script -->
-<div id="edit-modal" class="modal-custom-backdrop">
+<!-- MODAL CÂU HỎI BẢO MẬT & MẬT KHẨU ADMIN NHANH -->
+<div id="admin-auth-modal" class="modal-custom-backdrop">
     <div class="modal-dialog-custom">
-        <h2 class="card-title-custom mb-4"><i class="fa-solid fa-pen-to-square text-info"></i> Chỉnh Sửa Script</h2>
-        <input type="hidden" id="edit-tab-idx">
-        <input type="hidden" id="edit-script-idx">
+        <div class="text-center mb-3">
+            <i class="fa-solid fa-user-shield text-info" style="font-size: 42px;"></i>
+            <h3 class="fw-bold text-white mt-2 fs-5">XÁC MINH DÀNH CHO ADMIN</h3>
+            <p class="text-muted fs-6">Trả lời đúng 3 câu hỏi HOẶC nhập mã Admin nhanh!</p>
+        </div>
+
         <div class="mb-3">
-            <label class="form-label-custom">Tên Script</label>
-            <input type="text" class="form-control-custom" id="edit-script-name">
+            <label class="form-label text-white-50 fw-bold fs-6">1. Ai là người tạo ra Hub? (Hoặc nhập Mã Admin)</label>
+            <input type="text" class="form-control-custom" id="auth-q1" placeholder="Nhập biệt danh hoặc Mã Admin...">
         </div>
         <div class="mb-3">
-            <label class="form-label-custom">Mô tả ngắn</label>
-            <input type="text" class="form-control-custom" id="edit-script-desc">
+            <label class="form-label text-white-50 fw-bold fs-6">2. Tên thật là gì?</label>
+            <input type="text" class="form-control-custom" id="auth-q2" placeholder="Nhập tên thật...">
         </div>
         <div class="mb-4">
-            <label class="form-label-custom">Nội dung Script</label>
-            <textarea class="form-control-custom" id="edit-script-content" rows="6"></textarea>
+            <label class="form-label text-white-50 fw-bold fs-6">3. Sinh năm bao nhiêu?</label>
+            <input type="text" class="form-control-custom" id="auth-q3" placeholder="Nhập năm sinh...">
         </div>
-        <div class="d-flex gap-2 justify-content-end">
-            <button class="btn-custom btn-primary-cyan" onclick="saveEditScript()">
-                <i class="fa-solid fa-check"></i> Lưu Cập Nhật
+
+        <div class="d-flex gap-2">
+            <button class="btn-custom btn-primary-cyan flex-1 py-2.5" onclick="verifyAdminAuth()">
+                <i class="fa-solid fa-key me-1"></i> MỞ KHÓA QUẢN LÝ
             </button>
-            <button class="btn-custom btn-danger-custom" onclick="closeEditModal()">Hủy</button>
+            <button class="btn-custom btn-secondary-custom px-3" onclick="closeAuthModal()">Hủy</button>
         </div>
     </div>
 </div>
 
-<!-- Bootstrap 5 JS -->
+<!-- MODAL PROGRESS BAR TẢI 30 LINK SCRIPTBLOX (ĐƯỢC SỬA BỘ ĐẾM CHUẨN XÁC & THANH PROXY) -->
+<div id="sb-loading-modal" class="modal-custom-backdrop">
+    <div class="loading-progress-card">
+        <div class="spinner-sci-fi"></div>
+        <h4 class="fw-bold text-white mb-1 fs-5" id="sb-modal-status-title">ĐANG KHỞI ĐỘNG TIẾN TRÌNH...</h4>
+        <p class="text-info fs-6 font-mono mb-3 truncate" id="sb-modal-current-script">Chuẩn bị kết nối API Scriptblox...</p>
+
+        <!-- Progress Bar Link -->
+        <div class="d-flex justify-content-between text-white-50 fs-6 font-mono">
+            <span>Tiến độ xử lý Link:</span>
+            <span id="sb-modal-link-count" class="text-info fw-bold">0 / 0 Link</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="sb-modal-progress-fill" class="progress-bar-fill"></div>
+        </div>
+
+        <!-- Progress Bar Bypass Proxy (1 -> 6) -->
+        <div class="d-flex justify-content-between text-white-50 fs-6 font-mono mt-3">
+            <span>Tiến trình Proxy Bypass:</span>
+            <span id="sb-modal-proxy-count" class="text-warning fw-bold">Proxy 1 / 6</span>
+        </div>
+        <div class="progress-bar-container">
+            <div id="sb-modal-proxy-fill" class="progress-bar-fill" style="background: linear-gradient(90deg, #f59e0b, #10b981);"></div>
+        </div>
+
+        <div class="text-end text-emerald-400 font-mono text-xs mt-2 fw-bold" id="sb-modal-success-counter">
+            Đã tải thành công: 0 Link
+        </div>
+    </div>
+</div>
+
+<!-- POP-UP STATUS MODAL (THÀNH CÔNG HOẶC LỖI) -->
+<div id="status-popup-modal" class="modal-custom-backdrop">
+    <div id="status-popup-card-box" class="status-popup-card">
+        <div id="status-popup-icon" class="fs-1 mb-2"></div>
+        <h3 id="status-popup-title" class="fw-bold text-white fs-5 mb-2"></h3>
+        <p id="status-popup-msg" class="text-muted fs-6 mb-4 leading-relaxed"></p>
+        <button class="btn-custom btn-primary-cyan w-100 py-2.5" onclick="closeStatusPopup()">
+            <i class="fa-solid fa-check me-1"></i> ĐÃ HIỂU
+        </button>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
+    // Dữ liệu BAN ĐẦU RỖNG 100% - TẢI TỪ SERVER NODE.JS
     let hubData = {
-        Info: { Name: "", Version: "", Creator: "Hothiptv", ThemeColor: [0, 173, 181] },
-        HomeTab: { Introduction: "", Elements: [] },
+        Info: { Name: "", Version: "", Creator: "Hothiptv" },
+        HomeTab: { Introduction: "" },
         Tabs: []
     };
 
+    let isAdminLoggedIn = false;
+    let fetchedScriptbloxItems = [];
     let tabCollapsedState = {};
-    let descExpandedState = {};
+    let codeExpandedState = {};
     let searchQuery = "";
-    let confirmCallback = null;
-    let fetchedScriptbloxItems = []; // Lưu trữ danh sách kết quả bóc tách tạm thời
+
+    // Chống F12 / Inspect
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode == 123 || 
+           (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || 
+           (e.ctrlKey && e.keyCode == 85)) {
+            e.preventDefault();
+            showStatusPopup("⚠️ Đã Chặn F12", "Hệ thống đã chặn F12 để bảo mật an toàn cho Hub!", "error");
+            return false;
+        }
+    });
 
     window.onload = async function() {
         await loadDataFromServer();
     };
+
+    // Load Data từ Server Node.js
+    async function loadDataFromServer() {
+        try {
+            const response = await fetch('/raw-hub?t=' + Date.now());
+            if (response.ok) {
+                hubData = await response.json();
+                document.getElementById('hub-name').value = hubData.Info?.Name || "";
+                document.getElementById('hub-version').value = hubData.Info?.Version || "";
+                document.getElementById('hub-intro').value = hubData.HomeTab?.Introduction || "";
+                
+                renderPublicScripts();
+                updateStats();
+                updateTabSelectOptions();
+            } else {
+                showStatusPopup("Lỗi Server", "Không thể lấy dữ liệu từ Server Node.js!", "error");
+            }
+        } catch (error) {
+            console.error("Lỗi kết nối Node.js:", error);
+            renderPublicScripts();
+        }
+    }
 
     function switchTab(viewName) {
         document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active-view'));
@@ -977,406 +839,324 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function showToast(message, type = 'success') {
-        const wrapper = document.getElementById('toast-wrapper');
-        const toast = document.createElement('div');
-        toast.className = `toast-custom toast-${type}`;
-        
-        let icon = '<i class="fa-solid fa-circle-check text-success"></i>';
-        if (type === 'error') icon = '<i class="fa-solid fa-circle-xmark text-danger"></i>';
-        if (type === 'info') icon = '<i class="fa-solid fa-circle-info text-info"></i>';
+    // Pop-up Modal Status Notification
+    function showStatusPopup(title, msg, type = 'success') {
+        const modal = document.getElementById('status-popup-modal');
+        const box = document.getElementById('status-popup-card-box');
+        const icon = document.getElementById('status-popup-icon');
+        const titleEl = document.getElementById('status-popup-title');
+        const msgEl = document.getElementById('status-popup-msg');
 
-        toast.innerHTML = `<div>${icon}</div> <div>${message}</div>`;
-        wrapper.appendChild(toast);
+        titleEl.innerText = title;
+        msgEl.innerText = msg;
 
-        setTimeout(() => toast.classList.add('show'), 15);
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => toast.remove(), 350);
-        }, 3200);
+        if (type === 'success') {
+            box.className = "status-popup-card status-popup-success";
+            icon.innerHTML = '<i class="fa-solid fa-circle-check text-success"></i>';
+        } else {
+            box.className = "status-popup-card status-popup-error";
+            icon.innerHTML = '<i class="fa-solid fa-circle-xmark text-danger"></i>';
+        }
+
+        modal.classList.add('active');
     }
 
-    function showCustomConfirm(title, message, onConfirm) {
-        document.getElementById('confirm-modal-title').innerText = title;
-        document.getElementById('confirm-modal-msg').innerText = message;
-        confirmCallback = onConfirm;
-        document.getElementById('confirm-modal').classList.add('active');
+    function closeStatusPopup() {
+        document.getElementById('status-popup-modal').classList.remove('active');
     }
 
-    function closeConfirmModal() {
-        document.getElementById('confirm-modal').classList.remove('active');
-        confirmCallback = null;
+    // Trigger Admin Auth Modal
+    function triggerAdminLogin() {
+        if (isAdminLoggedIn) {
+            switchTab('dashboard');
+            return;
+        }
+        document.getElementById('admin-auth-modal').classList.add('active');
     }
 
-    document.getElementById('confirm-modal-btn-yes').addEventListener('click', function() {
-        if (confirmCallback) confirmCallback();
-        closeConfirmModal();
-    });
+    function closeAuthModal() {
+        document.getElementById('admin-auth-modal').classList.remove('active');
+    }
 
+    // Verify Admin Auth
+    function verifyAdminAuth() {
+        const q1 = document.getElementById('auth-q1').value.trim();
+        const q2 = document.getElementById('auth-q2').value.trim().toLowerCase();
+        const q3 = document.getElementById('auth-q3').value.trim();
+
+        // 1. Kiểm tra Mật Khẩu Admin Nhanh
+        const isQuickCode = (q1 === '09045059830936714369-ans' || q1 === 'ans0904' || 
+                             q2 === '09045059830936714369-ans' || q2 === 'ans0904');
+
+        // 2. Trả lời 3 câu hỏi bảo mật
+        const isQ1Correct = (q1.toLowerCase() === 'hothiptv');
+        const isQ2Correct = (q2 === 'nguyễn trọng an' || q2 === 'nguyen trong an');
+        const isQ3Correct = (q3 === '2014');
+
+        if (isQuickCode || (isQ1Correct && isQ2Correct && isQ3Correct)) {
+            isAdminLoggedIn = true;
+            closeAuthModal();
+            showStatusPopup("Mở Khóa Quản Lý", "🔓 Đã mở khóa quyền Admin thành công!", "success");
+
+            document.getElementById('btn-tab-dashboard').style.display = 'inline-flex';
+            document.getElementById('btn-tab-create').style.display = 'inline-flex';
+            document.getElementById('btn-tab-home-config').style.display = 'inline-flex';
+            document.getElementById('btn-save-all').style.display = 'block';
+
+            renderTabsTree();
+            switchTab('dashboard');
+        } else {
+            showStatusPopup("Xác Minh Thất Bại", "❌ Sai thông tin xác minh hoặc Mã Admin!", "error");
+        }
+    }
+
+    // Helpers Copy
     function copyMainLoader() {
         const text = document.getElementById('main-hub-loader').innerText;
         navigator.clipboard.writeText(text).then(() => {
-            showToast("Đã sao chép mã Loader Hub thành công!", "success");
-        }).catch(err => {
-            console.error("Lỗi sao chép:", err);
-            showToast("Không thể sao chép script!", "error");
+            showStatusPopup("Đã Sao Chép", "Mã Loader Hub đã được sao chép!", "success");
         });
     }
 
-    function copyScriptContent(tIdx, sIdx, e) {
-        if (e) e.stopPropagation();
-        const content = hubData.Tabs[tIdx].StandaloneScripts[sIdx].Content;
-        if (!content) return showToast("Script này không có nội dung!", "error");
+    function copyScriptText(content) {
+        if (!content) return showStatusPopup("Lỗi Code", "Không có nội dung code!", "error");
         navigator.clipboard.writeText(content).then(() => {
-            showToast("Đã sao chép mã Script!", "success");
-        }).catch(err => {
-            console.error("Lỗi sao chép:", err);
-            showToast("Không thể sao chép script!", "error");
+            showStatusPopup("Đã Sao Chép", "Mã Script đã được sao chép!", "success");
         });
     }
 
-    async function loadDataFromServer() {
-        try {
-            const response = await fetch('/raw-hub?t=' + Date.now());
-            if (response.ok) {
-                hubData = await response.json();
-                document.getElementById('hub-name').value = hubData.Info?.Name || "";
-                document.getElementById('hub-version').value = hubData.Info?.Version || "";
-                document.getElementById('hub-intro').value = hubData.HomeTab?.Introduction || "";
-                
-                updateStats();
-                renderTabsTree();
-                updateTabSelectOptions();
-            } else {
-                showToast("Không thể lấy dữ liệu từ server!", "error");
-            }
-        } catch (error) {
-            console.error("Lỗi kết nối:", error);
-            showToast("Lỗi kết nối đến máy chủ!", "error");
-        }
-    }
-
-    function updateStats() {
-        const totalTabs = hubData.Tabs ? hubData.Tabs.length : 0;
-        let totalScripts = 0;
-        if (hubData.Tabs) {
-            hubData.Tabs.forEach(tab => {
-                if (tab.StandaloneScripts) totalScripts += tab.StandaloneScripts.length;
-            });
-        }
-        document.getElementById('stat-total-tabs').innerText = totalTabs;
-        document.getElementById('stat-total-scripts').innerText = totalScripts;
-    }
-
-    function toggleInputMode() {
-        const mode = document.getElementById('input-mode').value;
-        document.getElementById('manual-input-block').style.display = (mode === 'manual') ? 'block' : 'none';
-        document.getElementById('syntax-input-block').style.display = (mode === 'syntax') ? 'block' : 'none';
-        document.getElementById('scriptblox-input-block').style.display = (mode === 'scriptblox') ? 'block' : 'none';
-    }
-
-    function toggleAddFields() {
-        const type = document.getElementById('add-type').value;
-        document.getElementById('field-tab-name').style.display = (type === 'tab') ? 'block' : 'none';
-        document.getElementById('script-fields').style.display = (type === 'script') ? 'block' : 'none';
-    }
-
-    function toggleSbDegree() {
-        const deg = document.getElementById('sb-mode-degree').value;
-        document.getElementById('sb-single-input-wrapper').style.display = (deg === '1') ? 'block' : 'none';
-        document.getElementById('sb-multi-input-wrapper').style.display = (deg === '2') ? 'block' : 'none';
-    }
-
-    function updateTabSelectOptions() {
-        const selectManual = document.getElementById('target-tab-select');
-        const selectGlobal = document.getElementById('sb-global-target-tab');
-        
-        selectManual.innerHTML = "";
-        selectGlobal.innerHTML = "";
+    // Render Public Scripts
+    function renderPublicScripts() {
+        const container = document.getElementById('public-scripts-container');
+        container.innerHTML = "";
 
         if (!hubData.Tabs || hubData.Tabs.length === 0) {
-            let opt1 = document.createElement('option');
-            opt1.value = ""; opt1.innerText = "-- Chưa có Tab nào --";
-            selectManual.appendChild(opt1);
-
-            let opt2 = document.createElement('option');
-            opt2.value = ""; opt2.innerText = "-- Chưa có Tab nào --";
-            selectGlobal.appendChild(opt2);
+            container.innerHTML = "<p class='text-center text-muted py-4'>Chưa có Script nào trong Hub.</p>";
             return;
         }
 
-        hubData.Tabs.forEach((tab, index) => {
-            let opt1 = document.createElement('option');
-            opt1.value = index;
-            opt1.innerText = tab.Name;
-            selectManual.appendChild(opt1);
-
-            let opt2 = document.createElement('option');
-            opt2.value = index;
-            opt2.innerText = tab.Name;
-            selectGlobal.appendChild(opt2);
-        });
-
-        // Cập nhật lại dropdown trong danh sách preview nếu có
-        renderFetchedItemsContainer();
-    }
-
-    function addNewElement() {
-        const type = document.getElementById('add-type').value;
-
-        if (type === 'tab') {
-            const name = document.getElementById('new-tab-name').value.trim();
-            if (!name) return showToast("Vui lòng nhập tên Tab!", "error");
-            hubData.Tabs.push({ Name: name, Sections: [], StandaloneScripts: [] });
-            document.getElementById('new-tab-name').value = "";
-            showToast(`Đã tạo Tab "${name}" thành công!`, "success");
-            switchTab('dashboard');
-        } else {
-            const tabIdx = document.getElementById('target-tab-select').value;
-            if (tabIdx === "" || tabIdx === null) return showToast("Vui lòng chọn Tab trước!", "error");
-            
-            const name = document.getElementById('new-script-name').value.trim();
-            const desc = document.getElementById('new-script-desc').value.trim();
-            const content = document.getElementById('new-script-content').value.trim();
-
-            if (!name || !content) return showToast("Vui lòng điền đầy đủ tên và mã script!", "error");
-
-            if (!hubData.Tabs[tabIdx].StandaloneScripts) hubData.Tabs[tabIdx].StandaloneScripts = [];
-            hubData.Tabs[tabIdx].StandaloneScripts.push({ Name: name, Desc: desc, Content: content });
-
-            document.getElementById('new-script-name').value = "";
-            document.getElementById('new-script-desc').value = "";
-            document.getElementById('new-script-content').value = "";
-            showToast(`Đã thêm Script "${name}"!`, "success");
-            switchTab('dashboard');
-        }
-
-        updateStats();
-        renderTabsTree();
-        updateTabSelectOptions();
-    }
-
-    function parseSyntaxInput() {
-        const text = document.getElementById('syntax-code').value.trim();
-        if (!text) return showToast("Vui lòng nhập lệnh cú pháp!", "error");
-
-        const lines = text.split('\n');
-        let successCount = 0;
-
-        lines.forEach(line => {
-            line = line.trim();
-            if (line.startsWith('/t/')) {
-                const tabName = line.substring(3).trim();
-                if (tabName) {
-                    let exists = hubData.Tabs.find(t => t.Name.toLowerCase() === tabName.toLowerCase());
-                    if (!exists) {
-                        hubData.Tabs.push({ Name: tabName, Sections: [], StandaloneScripts: [] });
-                    }
-                    successCount++;
-                }
-            } else if (line.startsWith('/s/')) {
-                const parts = line.substring(3).split('/');
-                if (parts.length >= 4) {
-                    const scriptName = parts[0].trim();
-                    const scriptDesc = parts[1].trim();
-                    const scriptContent = parts[2].trim();
-                    const tabTargetName = parts[3].trim();
-
-                    let targetTab = hubData.Tabs.find(t => t.Name.toLowerCase() === tabTargetName.toLowerCase());
-                    if (!targetTab) {
-                        targetTab = { Name: tabTargetName, Sections: [], StandaloneScripts: [] };
-                        hubData.Tabs.push(targetTab);
-                    }
-
-                    if (!targetTab.StandaloneScripts) targetTab.StandaloneScripts = [];
-                    targetTab.StandaloneScripts.push({
-                        Name: scriptName,
-                        Desc: scriptDesc,
-                        Content: scriptContent
-                    });
-                    successCount++;
-                }
+        hubData.Tabs.forEach(tab => {
+            if (tab.StandaloneScripts && tab.StandaloneScripts.length > 0) {
+                tab.StandaloneScripts.forEach(script => {
+                    const card = document.createElement('div');
+                    card.className = "script-card-item d-flex justify-content-between align-items-center gap-3 flex-wrap";
+                    card.innerHTML = `
+                        <div class="flex-1 min-w-[200px]">
+                            <div class="fw-bold text-info fs-6"><i class="fa-solid fa-scroll me-1"></i> ${script.Name}</div>
+                            <div class="text-muted fs-6 mt-1">${script.Desc || 'Không có mô tả'}</div>
+                            <span class="badge bg-secondary mt-2">Tab: ${tab.Name}</span>
+                        </div>
+                        <button class="btn-custom btn-primary-cyan px-4" onclick="copyScriptText('${script.Content.replace(/'/g, "\\'")}')">
+                            <i class="fa-regular fa-copy"></i> Sao Chép
+                        </button>
+                    `;
+                    container.appendChild(card);
+                });
             }
         });
-
-        document.getElementById('syntax-code').value = "";
-        updateStats();
-        renderTabsTree();
-        updateTabSelectOptions();
-        showToast(`Đã phân tích thành công ${successCount} mục!`, "success");
-        switchTab('dashboard');
     }
 
-    // SCRIPTBLOX MULTI-LINK FETCH LOGIC (CHUẨN 6 PROXY HOẶC NHANH 1 PROXY)
-    async function fetchOneScriptblox(rawUrl, mode) {
-        let scriptId = rawUrl.trim();
-        if (scriptId.includes('scriptblox.com/script/')) {
-            const parts = scriptId.split('scriptblox.com/script/')[1].split('?')[0].split('/');
-            scriptId = parts[0];
-        }
-        if (!scriptId) return null;
+    // THUẬT TOÁN TẢI SCRIPTBLOX BỐC TÁCH ID/SLUG VÀ BYPASS 6 PROXY CHUẨN XÁC
+    async function startScriptbloxMultiFetch() {
+        const rawMulti = document.getElementById('scriptblox-multi-urls').value.trim();
+        if (!rawMulti) return showStatusPopup("Cảnh Báo", "Vui lòng dán danh sách Link Scriptblox!", "error");
 
-        const targetApiUrl = `https://scriptblox.com/api/script/${scriptId}`;
-        const proxies = mode === 'standard' ? [
+        let urls = rawMulti.split(/[\n;]+/).map(u => u.trim()).filter(u => u.length > 0);
+        if (urls.length > 30) {
+            urls = urls.slice(0, 30);
+        }
+
+        const loadingModal = document.getElementById('sb-loading-modal');
+        const progressFill = document.getElementById('sb-modal-progress-fill');
+        const linkCountLabel = document.getElementById('sb-modal-link-count');
+        const currentScriptLabel = document.getElementById('sb-modal-current-script');
+        const proxyCountLabel = document.getElementById('sb-modal-proxy-count');
+        const proxyFill = document.getElementById('sb-modal-proxy-fill');
+        const successCounterLabel = document.getElementById('sb-modal-success-counter');
+
+        loadingModal.classList.add('active');
+        fetchedScriptbloxItems = [];
+
+        // ĐẶT VỀ 0% BAN ĐẦU
+        progressFill.style.width = `0%`;
+        linkCountLabel.innerText = `0 / ${urls.length} Link`;
+        successCounterLabel.innerText = `Đã tải thành công: 0 Link`;
+
+        let successCount = 0;
+
+        for (let i = 0; i < urls.length; i++) {
+            const currentUrl = urls[i];
+            currentScriptLabel.innerText = `Đang tải (${i + 1}/${urls.length}): ${currentUrl}`;
+
+            // Gọi hàm bóc tách với 6 Proxy
+            const itemData = await fetchScriptbloxWith6Proxies(currentUrl, (proxyIdx) => {
+                proxyCountLabel.innerText = `Proxy ${proxyIdx} / 6`;
+                proxyFill.style.width = `${Math.round((proxyIdx / 6) * 100)}%`;
+            });
+
+            if (itemData) {
+                fetchedScriptbloxItems.push(itemData);
+                successCount++;
+            }
+
+            // TẢI XONG 1 LINK -> CẬP NHẬT TIẾN TRÌNH THỰC TẾ
+            const percent = Math.round(((i + 1) / urls.length) * 100);
+            progressFill.style.width = `${percent}%`;
+            linkCountLabel.innerText = `${i + 1} / ${urls.length} Link`;
+            successCounterLabel.innerText = `Đã tải thành công: ${successCount} Link`;
+        }
+
+        loadingModal.classList.remove('active');
+
+        if (fetchedScriptbloxItems.length === 0) {
+            showStatusPopup("Tải Thất Bại", "Không tải được dữ liệu từ các link đã dán! Vui lòng kiểm tra lại link.", "error");
+            return;
+        }
+
+        renderFetchedPreview();
+        document.getElementById('scriptblox-preview-card').style.display = 'block';
+        showStatusPopup("Tải Hoàn Tất", `🎉 Đã tải hoàn tất ${fetchedScriptbloxItems.length} Script! Kiểm tra bên dưới để áp dụng vào Hub.`, "success");
+    }
+
+    // Bóc tách ID/Slug & thử 6 Proxy Bypass
+    async function fetchScriptbloxWith6Proxies(rawUrl, onProxyChange) {
+        let cleanInput = rawUrl.trim();
+        let queryKey = cleanInput;
+
+        // Trích xuất ID/Slug
+        if (cleanInput.includes('scriptblox.com/script/')) {
+            const parts = cleanInput.split('scriptblox.com/script/')[1].split('?')[0].split('/');
+            queryKey = parts[0];
+        }
+
+        // Tạo 2 URL Endpoint: Fetch ID trực tiếp hoặc Search Slug
+        const targetApiUrl = `https://scriptblox.com/api/script/${queryKey}`;
+        const searchApiUrl = `https://scriptblox.com/api/script/search?q=${encodeURIComponent(queryKey)}&page=1`;
+
+        // 6 PROXY BYPASS CƠ CHẾ
+        const proxyGenerators = [
             url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
             url => `https://corsproxy.io/?${encodeURIComponent(url)}`,
             url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
             url => `https://thingproxy.freeboard.io/fetch/${url}`,
             url => `https://jsonp.afeld.me/?url=${encodeURIComponent(url)}`,
             url => url
-        ] : [
-            url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}` // 1 proxy cho chế độ nhanh
         ];
 
-        for (let i = 0; i < proxies.length; i++) {
+        // 1. Thử API Direct Fetch 6 Proxy
+        for (let idx = 0; idx < proxyGenerators.length; idx++) {
+            if (onProxyChange) onProxyChange(idx + 1);
             try {
-                const proxyUrl = proxies[i](targetApiUrl);
-                const response = await fetch(proxyUrl, { headers: { 'Accept': 'application/json' } });
-                if (response.ok) {
-                    const responseText = await response.text();
-                    let parsedJson = null;
-                    try {
-                        parsedJson = JSON.parse(responseText);
-                    } catch(e) {
-                        try {
-                            const wrapped = JSON.parse(responseText);
-                            if (wrapped.contents) parsedJson = JSON.parse(wrapped.contents);
-                        } catch(err2) {}
-                    }
+                const pUrl = proxyGenerators[idx](targetApiUrl);
+                const res = await fetch(pUrl);
+                if (res.ok) {
+                    const text = await res.text();
+                    let parsed = null;
+                    try { parsed = JSON.parse(text); } catch(e) {}
 
-                    if (parsedJson && (parsedJson.script || parsedJson.title)) {
-                        const data = parsedJson.script || parsedJson;
+                    if (parsed && (parsed.script || parsed.title)) {
+                        const data = parsed.script || parsed;
                         return {
                             Name: data.title || "Scriptblox Script",
-                            Desc: data.features || (data.game?.name ? `Game: ${data.game.name}` : "Được bóc tách từ Scriptblox"),
+                            Desc: data.features || (data.game?.name ? `Game: ${data.game.name}` : "Scriptblox Import"),
                             Content: data.script || data.rawScript || "",
                             TargetTab: 0
                         };
                     }
                 }
-            } catch (err) {}
+            } catch(e) {}
         }
+
+        // 2. Nếu Direct Fetch không ra, thử Search API 6 Proxy
+        for (let idx = 0; idx < proxyGenerators.length; idx++) {
+            if (onProxyChange) onProxyChange(idx + 1);
+            try {
+                const pUrl = proxyGenerators[idx](searchApiUrl);
+                const res = await fetch(pUrl);
+                if (res.ok) {
+                    const text = await res.text();
+                    let parsed = null;
+                    try { parsed = JSON.parse(text); } catch(e) {}
+
+                    if (parsed && parsed.result && parsed.result.scripts && parsed.result.scripts.length > 0) {
+                        const data = parsed.result.scripts[0];
+                        return {
+                            Name: data.title || "Scriptblox Script",
+                            Desc: data.features || (data.game?.name ? `Game: ${data.game.name}` : "Scriptblox Import"),
+                            Content: data.script || data.rawScript || "",
+                            TargetTab: 0
+                        };
+                    }
+                }
+            } catch(e) {}
+        }
+
         return null;
     }
 
-    async function fetchFromScriptblox(mode) {
-        const degree = document.getElementById('sb-mode-degree').value;
-        const statusBox = document.getElementById('sb-status-box');
-        statusBox.style.display = "block";
-
-        let urls = [];
-        if (degree === '1') {
-            const single = document.getElementById('scriptblox-url').value.trim();
-            if (!single) return showToast("Vui lòng dán Link hoặc ID Scriptblox!", "error");
-            urls = [single];
-        } else {
-            const rawMulti = document.getElementById('scriptblox-multi-urls').value.trim();
-            if (!rawMulti) return showToast("Vui lòng dán danh sách Link!", "error");
-            // Phân tách bằng xuống dòng hoặc dấu ;
-            urls = rawMulti.split(/[\n;]+/).map(u => u.trim()).filter(u => u.length > 0);
-            if (urls.length > 10) {
-                showToast("Giới hạn tối đa 10 link mỗi lần quét!", "error");
-                urls = urls.slice(0, 10);
-            }
-        }
-
-        statusBox.className = "alert alert-info py-2 px-3 mb-3 font-monospace fs-6";
-        statusBox.innerText = `⏳ Đang xử lý bóc tách ${urls.length} link (${mode === 'standard' ? 'Chuẩn - 6 Proxy' : 'Nhanh - 1 Proxy'})...`;
-
-        fetchedScriptbloxItems = [];
-        for (let idx = 0; idx < urls.length; idx++) {
-            statusBox.innerText = `⏳ Đang tải link ${idx + 1}/${urls.length}...`;
-            const result = await fetchOneScriptblox(urls[idx], mode);
-            if (result) {
-                fetchedScriptbloxItems.push(result);
-            }
-        }
-
-        if (fetchedScriptbloxItems.length === 0) {
-            statusBox.className = "alert alert-danger py-2 px-3 mb-3 font-monospace fs-6";
-            statusBox.innerText = "❌ Không thể bóc tách dữ liệu từ các link đã nhập. Vui lòng kiểm tra lại!";
-            showToast("Bóc tách thất bại!", "error");
-            return;
-        }
-
-        statusBox.className = "alert alert-success py-2 px-3 mb-3 font-monospace fs-6";
-        statusBox.innerText = `✅ Đã bóc tách thành công ${fetchedScriptbloxItems.length} script! Kiểm tra bên dưới để chỉnh sửa.`;
-
-        renderFetchedItemsContainer();
-        document.getElementById('scriptblox-preview-card').style.display = "block";
-        showToast(`Đã lấy thành công ${fetchedScriptbloxItems.length} script!`, "success");
-    }
-
-    function renderFetchedItemsContainer() {
+    // Render Preview
+    function renderFetchedPreview() {
         const container = document.getElementById('sb-fetched-items-container');
         container.innerHTML = "";
-
-        if (!hubData.Tabs || hubData.Tabs.length === 0) {
-            container.innerHTML = "<div class='text-danger'>Cảnh báo: Bạn chưa tạo Tab nào! Hãy tạo Tab trước khi thêm script.</div>";
-            return;
-        }
 
         fetchedScriptbloxItems.forEach((item, index) => {
             let tabOptionsHtml = "";
             hubData.Tabs.forEach((tab, tIdx) => {
-                const selected = item.TargetTab === tIdx ? "selected" : "";
-                tabOptionsHtml += `<option value="${tIdx}" ${selected}>${tab.Name}</option>`;
+                tabOptionsHtml += `<option value="${tIdx}">${tab.Name}</option>`;
             });
 
-            let box = document.createElement('div');
-            box.className = "p-3 rounded border border-secondary";
-            box.style.background = "rgba(10, 15, 29, 0.9)";
+            const codeKey = `sb-code-${index}`;
+            const isCodeExpanded = codeExpandedState[codeKey] || false;
+
+            const box = document.createElement('div');
+            box.className = "p-3 rounded-2xl border border-secondary bg-slate-950 shadow-md";
             box.innerHTML = `
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong class="text-primary-cyan">#${index + 1} Script Preview</strong>
-                    <button class="btn btn-sm btn-outline-danger py-0 px-2" onclick="removeFetchedItem(${index})"><i class="fa-solid xmark"></i> Xóa</button>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label-custom">Chọn Tab Mục Tiêu:</label>
+                <div class="fw-bold text-info fs-6 mb-2"><i class="fa-solid fa-scroll me-1"></i> #${index + 1} ${item.Name}</div>
+                
+                <div class="mb-3">
+                    <label class="form-label text-white-50 fs-6 font-bold mb-1">Chọn Tab Mục Tiêu:</label>
                     <select class="form-select-custom sb-item-tab" data-index="${index}">${tabOptionsHtml}</select>
                 </div>
-                <div class="row g-2 mb-2">
+
+                <div class="row g-2 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label-custom">Tên Script</label>
+                        <label class="form-label text-white-50 fs-6 mb-1">Tên Script:</label>
                         <input type="text" class="form-control-custom sb-item-name" data-index="${index}" value="${item.Name.replace(/"/g, '&quot;')}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label-custom">Mô tả</label>
+                        <label class="form-label text-white-50 fs-6 mb-1">Mô tả ngắn:</label>
                         <input type="text" class="form-control-custom sb-item-desc" data-index="${index}" value="${item.Desc.replace(/"/g, '&quot;')}">
                     </div>
                 </div>
+
                 <div>
-                    <label class="form-label-custom">Mã Code</label>
-                    <textarea class="form-control-custom sb-item-content" data-index="${index}" rows="3">${item.Content}</textarea>
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label class="form-label text-white-50 fs-6 mb-0">Mã Code Script:</label>
+                        <button class="btn btn-sm text-info p-0 font-bold fs-6" onclick="toggleCodeExpand('${codeKey}')">
+                            ${isCodeExpanded ? '▲ Thu gọn Code' : '▼ Xem đầy đủ Code'}
+                        </button>
+                    </div>
+                    <textarea class="form-control-custom sb-item-content" data-index="${index}" rows="${isCodeExpanded ? '8' : '2'}">${item.Content}</textarea>
                 </div>
             `;
             container.appendChild(box);
         });
     }
 
-    function removeFetchedItem(index) {
-        fetchedScriptbloxItems.splice(index, 1);
-        renderFetchedItemsContainer();
-        if (fetchedScriptbloxItems.length === 0) {
-            document.getElementById('scriptblox-preview-card').style.display = "none";
-        }
+    function toggleCodeExpand(key) {
+        codeExpandedState[key] = !codeExpandedState[key];
+        renderFetchedPreview();
     }
 
     function applyGlobalTabToAll() {
         const globalTabIdx = document.getElementById('sb-global-target-tab').value;
-        if (globalTabIdx === "" || globalTabIdx === null) return showToast("Chưa chọn Tab áp dụng chung!", "error");
-        
-        fetchedScriptbloxItems.forEach((item) => {
-            item.TargetTab = parseInt(globalTabIdx);
+        document.querySelectorAll('.sb-item-tab').forEach(select => {
+            select.value = globalTabIdx;
         });
-        renderFetchedItemsContainer();
-        showToast("Đã áp dụng Tab chung cho tất cả!", "success");
+        showStatusPopup("Đã Áp Dụng", "Đã gán Tab chung cho tất cả Script!", "success");
     }
 
     function confirmAddAllScriptblox() {
-        if (fetchedScriptbloxItems.length === 0) return showToast("Không có script nào để thêm!", "error");
-
-        // Cập nhật lại giá trị user sửa từ form UI vào mảng tạm
         document.querySelectorAll('.sb-item-name').forEach(input => {
             const idx = input.getAttribute('data-index');
             fetchedScriptbloxItems[idx].Name = input.value.trim();
@@ -1394,81 +1174,107 @@
             fetchedScriptbloxItems[idx].TargetTab = parseInt(select.value);
         });
 
-        let addedCount = 0;
         fetchedScriptbloxItems.forEach(item => {
             const tIdx = item.TargetTab;
-            if (tIdx !== undefined && hubData.Tabs[tIdx]) {
+            if (hubData.Tabs[tIdx]) {
                 if (!hubData.Tabs[tIdx].StandaloneScripts) hubData.Tabs[tIdx].StandaloneScripts = [];
                 hubData.Tabs[tIdx].StandaloneScripts.push({
-                    Name: item.Name || "Scriptblox Script",
-                    Desc: item.Desc || "",
-                    Content: item.Content || ""
+                    Name: item.Name,
+                    Desc: item.Desc,
+                    Content: item.Content
                 });
-                addedCount++;
             }
         });
 
-        document.getElementById('scriptblox-preview-card').style.display = "none";
-        document.getElementById('sb-status-box').style.display = "none";
+        document.getElementById('scriptblox-preview-card').style.display = 'none';
         fetchedScriptbloxItems = [];
 
+        renderPublicScripts();
         updateStats();
         renderTabsTree();
-        showToast(`🎉 Đã thêm thành công ${addedCount} script vào Hub!`, "success");
+        showStatusPopup("Thành Công", "🎉 Đã thêm tất cả Script vào Hub thành công!", "success");
         switchTab('dashboard');
     }
 
-    function deleteTab(tabIndex, e) {
-        if (e) e.stopPropagation();
-        const tabName = hubData.Tabs[tabIndex]?.Name || "";
-        showCustomConfirm("Xóa Tab", `Bạn có chắc chắn muốn xóa Tab "${tabName}" và toàn bộ script bên trong không?`, function() {
-            hubData.Tabs.splice(tabIndex, 1);
-            updateStats();
-            renderTabsTree();
-            updateTabSelectOptions();
-            showToast("Đã xóa Tab thành công!", "info");
+    function toggleInputMode() {
+        const mode = document.getElementById('input-mode').value;
+        document.getElementById('manual-input-block').style.display = (mode === 'manual') ? 'block' : 'none';
+        document.getElementById('syntax-input-block').style.display = (mode === 'syntax') ? 'block' : 'none';
+        document.getElementById('scriptblox-input-block').style.display = (mode === 'scriptblox') ? 'block' : 'none';
+    }
+
+    function toggleAddFields() {
+        const type = document.getElementById('add-type').value;
+        document.getElementById('field-tab-name').style.display = (type === 'tab') ? 'block' : 'none';
+        document.getElementById('script-fields').style.display = (type === 'script') ? 'block' : 'none';
+    }
+
+    function updateStats() {
+        const totalTabs = hubData.Tabs ? hubData.Tabs.length : 0;
+        let totalScripts = 0;
+        if (hubData.Tabs) {
+            hubData.Tabs.forEach(tab => {
+                if (tab.StandaloneScripts) totalScripts += tab.StandaloneScripts.length;
+            });
+        }
+        document.getElementById('stat-total-tabs').innerText = totalTabs;
+        document.getElementById('stat-total-scripts').innerText = totalScripts;
+
+        document.getElementById('home-total-tabs').innerText = totalTabs;
+        document.getElementById('home-total-scripts').innerText = totalScripts;
+    }
+
+    function updateTabSelectOptions() {
+        const selectManual = document.getElementById('target-tab-select');
+        const selectGlobal = document.getElementById('sb-global-target-tab');
+        
+        selectManual.innerHTML = "";
+        selectGlobal.innerHTML = "";
+
+        if (!hubData.Tabs) return;
+
+        hubData.Tabs.forEach((tab, index) => {
+            let opt1 = document.createElement('option');
+            opt1.value = index; opt1.innerText = tab.Name;
+            selectManual.appendChild(opt1);
+
+            let opt2 = document.createElement('option');
+            opt2.value = index; opt2.innerText = tab.Name;
+            selectGlobal.appendChild(opt2);
         });
     }
 
-    function deleteScript(tabIndex, scriptIndex, e) {
-        if (e) e.stopPropagation();
-        showCustomConfirm("Xóa Script", "Bạn có chắc chắn muốn xóa Script này khỏi Tab?", function() {
-            hubData.Tabs[tabIndex].StandaloneScripts.splice(scriptIndex, 1);
-            updateStats();
-            renderTabsTree();
-            showToast("Đã xóa Script thành công!", "info");
-        });
-    }
+    function addNewElement() {
+        const type = document.getElementById('add-type').value;
 
-    function openEditScriptModal(tIdx, sIdx, e) {
-        if (e) e.stopPropagation();
-        const script = hubData.Tabs[tIdx].StandaloneScripts[sIdx];
-        document.getElementById('edit-tab-idx').value = tIdx;
-        document.getElementById('edit-script-idx').value = sIdx;
-        document.getElementById('edit-script-name').value = script.Name || "";
-        document.getElementById('edit-script-desc').value = script.Desc || "";
-        document.getElementById('edit-script-content').value = script.Content || "";
-        document.getElementById('edit-modal').classList.add('active');
-    }
+        if (type === 'tab') {
+            const name = document.getElementById('new-tab-name').value.trim();
+            if (!name) return showStatusPopup("Lỗi", "Vui lòng nhập tên Tab!", "error");
+            hubData.Tabs.push({ Name: name, StandaloneScripts: [] });
+            document.getElementById('new-tab-name').value = "";
+            showStatusPopup("Thành Công", `Đã tạo Tab "${name}"!`, "success");
+        } else {
+            const tabIdx = document.getElementById('target-tab-select').value;
+            const name = document.getElementById('new-script-name').value.trim();
+            const desc = document.getElementById('new-script-desc').value.trim();
+            const content = document.getElementById('new-script-content').value.trim();
 
-    function closeEditModal() {
-        document.getElementById('edit-modal').classList.remove('active');
-    }
+            if (!name || !content) return showStatusPopup("Lỗi", "Nhập tên và mã script!", "error");
 
-    function saveEditScript() {
-        const tIdx = document.getElementById('edit-tab-idx').value;
-        const sIdx = document.getElementById('edit-script-idx').value;
+            if (!hubData.Tabs[tabIdx].StandaloneScripts) hubData.Tabs[tabIdx].StandaloneScripts = [];
+            hubData.Tabs[tabIdx].StandaloneScripts.push({ Name: name, Desc: desc, Content: content });
 
-        const name = document.getElementById('edit-script-name').value.trim();
-        const desc = document.getElementById('edit-script-desc').value.trim();
-        const content = document.getElementById('edit-script-content').value.trim();
+            document.getElementById('new-script-name').value = "";
+            document.getElementById('new-script-desc').value = "";
+            document.getElementById('new-script-content').value = "";
+            showStatusPopup("Thành Công", `Đã thêm Script "${name}"!`, "success");
+        }
 
-        if (!name || !content) return showToast("Tên và Nội dung không được để trống!", "error");
-
-        hubData.Tabs[tIdx].StandaloneScripts[sIdx] = { Name: name, Desc: desc, Content: content };
-        closeEditModal();
+        renderPublicScripts();
+        updateStats();
         renderTabsTree();
-        showToast("Đã lưu cập nhật Script!", "success");
+        updateTabSelectOptions();
+        switchTab('dashboard');
     }
 
     function toggleTabCollapse(tIdx, e) {
@@ -1486,12 +1292,6 @@
         renderTabsTree();
     }
 
-    function toggleDescExpand(key, e) {
-        if (e) e.stopPropagation();
-        descExpandedState[key] = !descExpandedState[key];
-        renderTabsTree();
-    }
-
     function onSearchInput() {
         searchQuery = document.getElementById('search-script-input').value.toLowerCase().trim();
         renderTabsTree();
@@ -1502,28 +1302,11 @@
         container.innerHTML = "";
 
         if (!hubData.Tabs || hubData.Tabs.length === 0) {
-            container.innerHTML = "<p style='color: #8b949e; text-align:center; padding: 24px 0;'>Chưa có Tab Script nào được tạo.</p>";
+            container.innerHTML = "<p class='text-center text-muted py-4'>Chưa có Tab Script nào trong Hub.</p>";
             return;
         }
 
-        let hasVisibleItems = false;
-
         hubData.Tabs.forEach((tab, tIdx) => {
-            const isTabMatch = tab.Name.toLowerCase().includes(searchQuery);
-
-            let matchingScripts = [];
-            if (tab.StandaloneScripts) {
-                matchingScripts = tab.StandaloneScripts.filter(s => 
-                    s.Name.toLowerCase().includes(searchQuery) || 
-                    (s.Desc && s.Desc.toLowerCase().includes(searchQuery))
-                );
-            }
-
-            if (searchQuery && !isTabMatch && matchingScripts.length === 0) {
-                return;
-            }
-
-            hasVisibleItems = true;
             const isCollapsed = searchQuery ? false : (tabCollapsedState[tIdx] || false);
             const scriptCount = tab.StandaloneScripts ? tab.StandaloneScripts.length : 0;
 
@@ -1533,67 +1316,56 @@
             tabDiv.innerHTML = `
                 <div class="tab-header-bar" onclick="toggleTabCollapse(${tIdx}, event)">
                     <div class="d-flex align-items-center gap-2">
-                        <span class="collapse-indicator ${isCollapsed ? 'collapsed' : ''}"><i class="fa-solid fa-chevron-down"></i></span>
-                        <strong style="color: #f8fafc; font-size: 15.5px;"><i class="fa-solid fa-folder me-1 text-warning"></i> Tab: ${tab.Name}</strong>
-                        <span style="font-size:12px; color: var(--text-muted); background: rgba(255,255,255,0.08); padding: 3px 10px; border-radius: 12px; font-weight: 600;">${scriptCount} Script</span>
+                        <i class="fa-solid ${isCollapsed ? 'fa-chevron-right' : 'fa-chevron-down'} text-info fs-6"></i>
+                        <h6 class="fw-bold text-white mb-0"><i class="fa-solid fa-folder text-warning me-1"></i> Tab: ${tab.Name}</h6>
+                        <span class="badge bg-secondary font-mono">${scriptCount} Script</span>
                     </div>
-                    <button class="btn-custom btn-danger-custom" style="padding:6px 14px; font-size:12.5px;" onclick="deleteTab(${tIdx}, event)">
-                        <i class="fa-solid fa-trash-can"></i> Xóa Tab
-                    </button>
+                    <button class="btn btn-sm btn-danger px-3 font-bold" onclick="deleteTab(${tIdx}, event)">Xóa Tab</button>
                 </div>
                 <div class="item-list-container ${isCollapsed ? 'hidden-list' : ''}" id="scripts-of-tab-${tIdx}"></div>
             `;
             container.appendChild(tabDiv);
 
             const scriptListContainer = document.getElementById(`scripts-of-tab-${tIdx}`);
-            const scriptsToDisplay = searchQuery ? (isTabMatch ? tab.StandaloneScripts : matchingScripts) : tab.StandaloneScripts;
-            
-            if (scriptsToDisplay && scriptsToDisplay.length > 0) {
-                scriptsToDisplay.forEach((script) => {
-                    const sIdx = tab.StandaloneScripts.indexOf(script);
-                    const descKey = `${tIdx}-${sIdx}`;
-                    const isDescExpanded = descExpandedState[descKey] || false;
-
-                    const descText = script.Desc || "Không có mô tả";
-                    const isLongDesc = descText.length > 95;
-
+            if (tab.StandaloneScripts && tab.StandaloneScripts.length > 0) {
+                tab.StandaloneScripts.forEach((s, sIdx) => {
                     let scriptDiv = document.createElement('div');
-                    scriptDiv.className = 'script-card-item';
-                    scriptDiv.onclick = function(e) {
-                        openEditScriptModal(tIdx, sIdx, e);
-                    };
+                    scriptDiv.className = 'script-card-item d-flex justify-content-between align-items-center gap-2 flex-wrap';
                     scriptDiv.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap mb-2">
-                            <div><i class="fa-solid fa-scroll text-info me-1"></i> Script: <strong style="color: var(--primary-cyan); font-size: 15px;">${script.Name}</strong></div>
-                            <div class="script-actions">
-                                <button class="btn-custom btn-success-custom" style="padding:5px 12px; font-size:12.5px;" onclick="copyScriptContent(${tIdx}, ${sIdx}, event)">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                                <button class="btn-custom btn-warning-custom" style="padding:5px 12px; font-size:12.5px;" onclick="openEditScriptModal(${tIdx}, ${sIdx}, event)">
-                                    <i class="fa-solid fa-pen"></i> Sửa
-                                </button>
-                                <button class="btn-custom btn-danger-custom" style="padding:5px 12px; font-size:12.5px;" onclick="deleteScript(${tIdx}, ${sIdx}, event)">
-                                    <i class="fa-solid fa-trash-can"></i> Xóa
-                                </button>
-                            </div>
+                        <div class="flex-1 min-w-[200px]">
+                            <div class="fw-bold text-info"><i class="fa-solid fa-scroll me-1"></i> ${s.Name}</div>
+                            <div class="text-muted fs-6 mt-0.5">${s.Desc || 'Không có mô tả'}</div>
                         </div>
-                        <div class="desc-text-box ${!isDescExpanded && isLongDesc ? 'truncated' : ''}">
-                            <i class="fa-regular fa-file-lines me-1"></i> Mô tả: ${descText}
-                        </div>
-                        ${isLongDesc ? `<button class="btn-expand-desc" onclick="toggleDescExpand('${descKey}', event)">${isDescExpanded ? '▲ Thu gọn mô tả' : '▼ Xem đầy đủ mô tả'}</button>` : ''}
+                        <button class="btn btn-sm btn-outline-danger font-bold" onclick="deleteScript(${tIdx}, ${sIdx}, event)">Xóa Script</button>
                     `;
                     scriptListContainer.appendChild(scriptDiv);
                 });
             } else {
-                scriptListContainer.innerHTML = "<p style='color: #6e7681; font-size: 13.5px; margin: 8px 0;'><i class='fa-solid fa-circle-exclamation me-1'></i> Tab này chưa chứa Script nào.</p>";
+                scriptListContainer.innerHTML = "<p class='text-muted fs-6 mb-0 py-1'><i class='fa-solid fa-circle-exclamation me-1'></i> Tab này chưa chứa Script nào.</p>";
             }
         });
-
-        if (!hasVisibleItems && searchQuery) {
-            container.innerHTML = `<p style='color: #8b949e; text-align:center; padding: 24px 0;'><i class='fa-solid fa-magnifying-glass me-1'></i> Không tìm thấy Tab hoặc Script khớp với từ khóa "${searchQuery}".</p>`;
-        }
     }
 
+    function deleteTab(tIdx, e) {
+        if (e) e.stopPropagation();
+        hubData.Tabs.splice(tIdx, 1);
+        renderPublicScripts();
+        updateStats();
+        renderTabsTree();
+        updateTabSelectOptions();
+        showStatusPopup("Đã Xóa", "Đã xóa Tab thành công!", "success");
+    }
+
+    function deleteScript(tIdx, sIdx, e) {
+        if (e) e.stopPropagation();
+        hubData.Tabs[tIdx].StandaloneScripts.splice(sIdx, 1);
+        renderPublicScripts();
+        updateStats();
+        renderTabsTree();
+        showStatusPopup("Đã Xóa", "Đã xóa Script thành công!", "success");
+    }
+
+    // Save To Node.js Server
     async function saveDataToServer() {
         hubData.Info.Name = document.getElementById('hub-name').value.trim();
         hubData.Info.Version = document.getElementById('hub-version').value.trim();
@@ -1608,13 +1380,13 @@
 
             const result = await response.json();
             if (response.ok && result.success) {
-                showToast("🎉 Đã lưu và đồng bộ trực tiếp lên GitHub thành công!", "success");
+                showStatusPopup("Lưu Thành Công", "🎉 Đã lưu và đồng bộ lên Server Node.js!", "success");
                 await loadDataFromServer();
             } else {
-                showToast("Lỗi lưu file: " + (result.message || "Từ chối kết nối"), "error");
+                showStatusPopup("Lỗi Lưu File", result.message || "Từ chối kết nối", "error");
             }
         } catch (error) {
-            showToast("Không thể kết nối đến máy chủ Render!", "error");
+            showStatusPopup("Lỗi Server", "Lỗi kết nối Server Node.js!", "error");
             console.error(error);
         }
     }
